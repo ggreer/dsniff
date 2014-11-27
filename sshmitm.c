@@ -389,7 +389,7 @@ main(int argc, char *argv[])
 	if (argc < 1)
 		usage();
 	
-	if ((ip = libnet_name_resolve(argv[0], 1)) == -1)
+	if ((ip = libnet_name2addr4(NULL, argv[0], LIBNET_RESOLVE)) == -1)
 		usage();
 
 	if (argc == 2 && (rport = atoi(argv[1])) == 0)

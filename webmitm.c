@@ -242,7 +242,7 @@ server_init(char *buf, int size)
 			word = buf_tok(&msg, "/", 1);
 			vhost = buf_strdup(word);
 		}
-		ssin.sin_addr.s_addr = libnet_name_resolve(vhost, 1);
+		ssin.sin_addr.s_addr = libnet_name2addr4(NULL, vhost, 1);
 		free(vhost);
 		
 		if (ssin.sin_addr.s_addr == ntohl(INADDR_LOOPBACK) ||
@@ -510,7 +510,7 @@ main(int argc, char *argv[])
 	argv += optind;
 
 	if (argc == 1) {
-		if ((static_host = libnet_name_resolve(argv[0], 1)) == -1)
+		if ((static_host = libnet_name2addr4(NULL, argv[0], 1)) == -1)
 			usage();
 	}
 	else if (argc != 0) usage();

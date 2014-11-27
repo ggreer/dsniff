@@ -145,14 +145,14 @@ process_http_request(struct tuple4 *addr, u_char *data, int len)
 		if (user == NULL)
 			user = "-";
 		if (vhost == NULL)
-			vhost = libnet_host_lookup(addr->daddr, Opt_dns);
+			vhost = libnet_addr2name4(addr->daddr, Opt_dns);
 		if (referer == NULL)
 			referer = "-";
 		if (agent == NULL)
 			agent = "-";
 		
 		printf("%s - %s [%s] \"%s http://%s%s\" - - \"%s\" \"%s\"\n",
-		       libnet_host_lookup(addr->saddr, Opt_dns),
+		       libnet_addr2name4(addr->saddr, Opt_dns),
 		       user, timestamp(), req, vhost, uri, referer, agent);
 	}
 	fflush(stdout);
