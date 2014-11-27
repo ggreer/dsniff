@@ -1,0 +1,44 @@
+.TH MACOF 8
+.ad
+.fi
+.SH NAME
+macof
+\-
+flood a switched LAN with random MAC addresses
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBmacof\fR [\fB-i \fIinterface\fR] [\fB-s \fIsrc\fR]
+[\fB-d \fIdst\fR] [\fB-e \fItha\fR] [\fB-x \fIsport\fR] [\fB-y \fIdport\fR]
+[\fB-n \fItimes\fR]
+.SH DESCRIPTION
+.ad
+.fi
+\fBmacof\fR floods the local network with random MAC addresses
+(causing some switches to fail open in repeating mode, facilitating
+sniffing). A straight C port of the original Perl Net::RawIP macof
+program by Ian Vitek <ian.vitek@infosec.se>.
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to send on.
+.IP "\fB-s \fIsrc\fR"
+Specify source IP address.
+.IP "\fB-d \fIdst\fR"
+Specify destination IP address.
+.IP "\fB-e \fItha\fR"
+Specify target hardware address.
+.IP "\fB-x \fIsport\fR"
+Specify TCP source port.
+.IP "\fB-y \fIdport\fR"
+Specify TCP destination port.
+.IP "\fB-n \fItimes\fR"
+Specify the number of packets to send.
+.LP
+Values for any options left unspecified will be generated randomly.
+.SH "SEE ALSO"
+dsniff(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

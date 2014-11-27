@@ -1,0 +1,34 @@
+.TH MAILSNARF 8
+.ad
+.fi
+.SH NAME
+mailsnarf
+\-
+sniff mail messages in Berkeley mbox format
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBmailsnarf\fR [\fB-i \fIinterface\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+.SH DESCRIPTION
+.ad
+.fi
+\fBmailsnarf\fR outputs e-mail messages sniffed from SMTP and POP
+traffic in Berkeley mbox format, suitable for offline browsing with
+your favorite mail reader (mail(1), pine(1), etc.).
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP \fB-v\fR
+"Versus" mode. Invert the sense of matching, to select non-matching
+messages.
+.IP \fIpattern\fR
+Specify regular expression for message header/body matching.
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.SH "SEE ALSO"
+dsniff(8), mail(1), pine(1)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

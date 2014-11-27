@@ -1,0 +1,37 @@
+.TH URLSNARF 8
+.ad
+.fi
+.SH NAME
+urlsnarf
+\-
+sniff HTTP requests in Common Log Format
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBurlsnarf\fR [\fB-n\fR] [\fB-i \fIinterface\fR]  [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+.SH DESCRIPTION
+.ad
+.fi
+\fBurlsnarf\fR outputs all requested URLs sniffed from HTTP traffic in
+CLF (Common Log Format, used by almost all web servers), suitable for
+offline post-processing with your favorite web log analysis tool
+(analog, wwwstat, etc.).
+.SH OPTIONS
+.IP \fB-n\fR
+Do not resolve IP addresses to hostnames.
+.IP "\fB-i \fIinterface\fR"
+.IP \fB-v\fR
+"Versus" mode. Invert the sense of matching, to select non-matching
+URLs.
+Specify the interface to listen on.
+.IP \fIpattern\fR
+Specify regular expression for URL matching.
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.SH "SEE ALSO"
+dsniff(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

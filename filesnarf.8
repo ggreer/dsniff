@@ -1,0 +1,33 @@
+.TH FILESNARF 8
+.ad
+.fi
+.SH NAME
+filesnarf
+\-
+sniff files from NFS traffic
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBfilesnarf\fR [\fB-i \fIinterface\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+.SH DESCRIPTION
+.ad
+.fi
+\fBfilesnarf\fR saves files sniffed from NFS traffic in the current
+working directory.
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP \fB-v\fR
+"Versus" mode. Invert the sense of matching, to select non-matching
+files.
+.IP \fIpattern\fR
+Specify regular expression for filename matching.
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.SH "SEE ALSO"
+dsniff(8), nfsd(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

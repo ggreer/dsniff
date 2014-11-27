@@ -1,0 +1,34 @@
+.TH WEBMITM 8
+.ad
+.fi
+.SH NAME
+webmitm
+\-
+HTTP / HTTPS monkey-in-the-middle
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBwebmitm\fR [\fB-d\fR] [\fBhost\fR]
+.SH DESCRIPTION
+.ad
+.fi
+\fBwebmitm\fR transparently proxies and sniffs HTTP / HTTPS traffic
+redirected by dnsspoof(8), capturing most "secure" SSL-encrypted
+webmail logins and form submissions.
+.SH OPTIONS
+.IP \fB-d\fR
+Enable debugging mode. May be specified multiple times to greater
+effect.
+.IP \fBhost\fR
+Specify a host to proxy to. If none given, only requests containing an
+HTTP/1.1 Host: header or absolute URI will be relayed transparently.
+.SH FILES
+.IP \fIwebmitm.crt\fR
+SSL certificate
+.SH "SEE ALSO"
+dsniff(8), dnsspoof(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

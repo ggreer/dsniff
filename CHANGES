@@ -1,0 +1,257 @@
+$Id: CHANGES,v 1.56 2001/03/19 06:53:47 dugsong Exp $
+
+- Add support for ICMP frag-needed to tcpnice.
+
+- New sshow program:
+  http://www.openwall.com/advisories/OW-003-ssh-traffic-analysis.txt
+
+- Add support for HTTP absolute URIs to webmitm and urlsnarf.
+
+- Add support for non-transparent proxying to webmitm, as requested
+  by Juergen Schmidt <ju@ct.heise.de>.
+
+- Fix TDS decode for MSSQL 7.x, from Paul van Maaren
+  <P.v.Maaren@reseau.nl>.
+
+- Kludge around stupid Redhat Linux 6, 7 build env inconsistencies.
+
+- Fix dumb endianness bug in dnsspoof.
+
+
+v2.3 Sun Dec 17 11:35:38 EST 2000
+
+- Add VRRP parsing to dsniff, from Eric Jackson <shinobi@monkey.org>.
+
+- Require pcap filter argument for tcpkill, tcpnice.
+
+- Add Microsoft PPTP MS-CHAP (v1, v2) parsing to dsniff, based on
+  anger.c by Aleph One <aleph1@securityfocus.com>.
+
+- Fix pcAnywhere 7, 9.x parsing in dsniff.
+
+- Add -t trigger[,...] flag to dsniff, to specify individual triggers
+  on the command line.
+
+- Convert most everything to use new buf interface.
+
+- New programs: dnsspoof, msgsnarf, sshmitm, webmitm.
+
+- Fix inverted regex matching in *snarf programs.
+
+- Consistent arpspoof, macof, tcpnice, tcpkill output.
+
+- Rename arpredirect to arpspoof (maintain consistent *sniff, *snarf,
+  *spoof, *spy nomenclature).
+
+- Consistent pcap filter argument to dsniff, *snarf programs.
+
+- Add trigger for Checkpoint Firewall-1 Session Authentication Agent
+  (261/tcp), as suggested by Joe Segreti <seg@clark.net>.
+
+- Add SMTP parsing to dsniff, as requested by Denis Ducamp
+  <Denis.Ducamp@hsc.fr>.
+
+- Add rexec and RPC ypserv parsing to dsniff, as requested by 
+  Oliver Friedrichs <of@securityfocus.com>.
+
+- Add HTTP proxy auth parsing back to dsniff, it got lost in the
+  shuffle. Reported by Denis Ducamp <Denis.Ducamp@hsc.fr>.
+
+- Add NNTPv2 and other AUTHINFO extensions to dsniff.
+
+
+v2.2 Wed Jun 14 00:58:37 EDT 2000
+
+- Rewrite HTTP decoding in dsniff, adding support for QUERY_STRING and
+  x-www-form-urlencoded parsing (various CGI authentication schemes).
+  
+- Alpha support (libnids and libnet still need to be fixed).
+
+- Fix arp discovery in arpredirect on Linux.
+
+- Add -m flag to enable automatic protocol detection in dsniff,
+  based on the classic file(1) command by Ian Darwin.
+
+- Add TDS (Sybase, Microsoft SQL Server) parsing to dsniff.
+
+- Clean up RPC decodes, TCP half-duplex reassembly in dsniff.
+
+- New filesnarf program.
+
+- Add regular expression matching to mailsnarf.
+
+- Add POP support to mailsnarf.
+
+
+v2.1 Thu May 18 16:18:35 EDT 2000
+
+- Add -c flag to specify half-duplex TCP stream reassembly in dsniff
+  (better support for sniffing off switched ports using arpredirect).
+
+- Fix > 24 char Meeting Maker passwd parsing in dsniff.
+
+- Fix OSPF parsing in dsniff (don't truncate first two chars),
+  as reported by Felix Contreras <cfelix@fisiologia.com>.
+
+- Fix webspy URL ignoring, as reported by Interrupt <mike@eEye.com>.
+
+
+v2.0 Tue May 16 13:11:22 EDT 2000
+
+- Major dsniff rewrite, since ppl are actually reading this code. :-)
+
+- Add configurable decode triggers to dsniff.
+
+- Add dsniff debugging functions, split out decode routines.
+
+- Add yppasswd parsing to dsniff.
+
+- Rewrite dsniff RPC framework, portmap and NFS mountd decodes.
+
+- Make dsniff savefile format portable.
+
+- Remove findgw - to be subsumed by dsquat package.
+
+- Add PostgreSQL parsing to dsniff.
+
+- Add Meeting Maker parsing to dsniff.
+
+- Add poppass parsing to dsniff.
+
+- Add RIP, OSPF parsing to dsniff.
+
+- Fix RSET handling in mailsnarf (from Martin Fredriksson <martin@crt.se>).
+
+
+v1.8 Sun Apr  9 23:59:46 EDT 2000
+
+- Add SOCKS parsing to dsniff.
+
+- Add pcAnywhere parsing to dsniff.
+
+- Fix SMB parsing in dsniff.
+
+- Add IRC parsing to dsniff.
+
+- Add NAI Sniffer parsing to dsniff (from Anonymous).
+
+
+v1.7 Mon Mar 27 16:19:32 EST 2000
+
+- Add -s flag to specify snaplen to dsniff.
+
+- Support systems without <libgen.h> or dirname().
+
+- Add Microsoft SMB parsing to dsniff.
+
+- Add Citrix ICA parsing to dsniff.
+
+- Add LDAP parsing to dsniff.
+
+- Fix Berkeley mbox format again (\n, not \r\n).
+
+- Fix null URI dereference in urlsnarf.
+
+- Add Oracle SQL*Net (v2, Net8) parsing to dsniff.
+
+- Catch data left on connection close in mailsnarf, urlsnarf, webspy.
+
+
+v1.6 Sun Mar 12 16:25:09 EST 2000
+
+- Support non-glibc Linux systems missing ether_ntoa().
+
+- Unique HTTP auth info by URI dirname in dsniff.
+
+- Add Napster parsing to dsniff.
+
+- Don't rely on /etc/services for dsniff.
+
+- Add AIM, ICQ (v2, v5) parsing to dsniff.
+
+- Add CVS pserver parsing to dsniff.
+
+- Skip IMAP command tag in dsniff.
+
+
+v1.5 Tue Feb 15 23:22:25 EST 2000
+
+- Fix HTTP proxy support in urlsnarf (from <felix@convergence.de>).
+
+- Fix HTTP proxy support in dsniff (from <Alain.Thivillon@hsc.fr>).
+
+- Proper manpages for all programs.
+
+- Strip binary nulls in telnet input, in dsniff (doh!).
+
+
+v1.4 Thu Jan 27 12:08:41 EST 2000
+
+- Add verbose flag (-v) to tcpkill, tcpnice.
+
+- Add NNTP parsing to dsniff (from Felix von Leitner <felix@convergence.de>).
+
+- Fix mailsniff mbox formatting of ^From in message body.
+
+- Add HTTP proxy support in dsniff, urlsnarf, webspy.
+
+- Fix getopt() usage to be POSIX compliant (s/EOF/-1/).
+
+- New tcpnice program.
+
+
+v1.3 Fri Jan 21 02:47:37 EST 2000
+
+- Ported to Solaris (along with libnids :-)
+
+- Add Berkeley db(3) output file format to dsniff, as well as
+  restricting logging to unique auth info.
+
+- New tcpkill program.
+
+- New lame dsniff(8) manpage.
+
+- Add DNS lookups (and -n flag to disable) in dsniff, urlsnarf.
+
+- Add HTTP Basic Authentication, Referer, User-Agent logging to urlsnarf.
+
+- Improve RPC message parsing in dsniff.
+
+- Improve SMTP parsing in mailsnarf.
+
+- Improve HTTP 1.x parsing in dsniff, urlsnarf, webspy.
+
+- Fix IMAP, Rlogin, Telnet option parsing in dsniff (broke them in 1.2).
+
+- Add X11 MIT-MAGIC-COOKIE parsing to dsniff.
+
+- Don't forget to decode POP SASL username in dsniff (doh!).
+
+
+v1.2 Sat Jan  8 22:36:42 EST 2000
+
+- Ported to FreeBSD (but not tested!).
+
+- Add GNU autoconf support.
+
+- Add NFS mount parsing / RPC framework to dsniff.
+
+- Add -i flag to specify interface to use with dsniff, mailsnarf,
+  urlsnarf, and webspy.
+
+
+v1.1 Tue Dec 21 10:31:42 EST 1999 (re-released)
+
+- Make macof loop repeatedly if missing -n argument.
+
+- Remove dependencies on unreleased version of libnids.
+
+- Make arpredirect restore original ARP mapping on exit.
+
+- Ported to Linux & Solaris (but not tested!).
+
+
+v1.0 Fri Dec 17 02:42:42 EST 1999
+
+- First public release.
+

@@ -1,0 +1,30 @@
+.TH WEBSPY 8
+.ad
+.fi
+.SH NAME
+webspy
+\-
+display sniffed URLs in Netscape in real-time
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBwebspy\fR [\fB-i \fIinterface\fR] \fIhost\fR
+.SH DESCRIPTION
+.ad
+.fi
+\fBwebspy\fR sends URLs sniffed from a client to your local Netscape
+browser for display, updated in real-time (as the target surfs, your
+browser surfs along with them, automagically). Netscape must be
+running on your local X display ahead of time.
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP \fIhost\fR
+Specify the web client to spy on.
+.SH "SEE ALSO"
+dsniff(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

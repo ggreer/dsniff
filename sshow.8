@@ -1,0 +1,39 @@
+.TH SSHOW 8
+.ad
+.fi
+.SH NAME
+sshow
+\-
+SSH traffic analysis tool
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBsshow\fR [\fB-d\fR] [\fB-i \fIinterface\fR] [\fIexpression\fR]
+.SH DESCRIPTION
+.ad
+.fi
+\fBsshow\fR analyzes encrypted SSH-1 and SSH-2 traffic, identifying
+authentication attempts, the lengths of passwords entered in
+interactive sessions, and command line lengths.
+.LP
+The following advisory describes the attacks implemented by
+\fBsshow\fR in detail:
+.LP
+.RS
+.I http://www.openwall.com/advisories/OW-003-ssh-traffic-analysis.txt
+.RE
+.SH OPTIONS
+.IP \fB-d\fR
+Enable verbose debugging output.
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.SH "SEE ALSO"
+dsniff(8), sshmitm(8)
+.SH AUTHORS
+.na
+.nf
+Solar Designer <solar@openwall.com>
+Dug Song <dugsong@monkey.org>

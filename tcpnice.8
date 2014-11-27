@@ -1,0 +1,38 @@
+.TH TCPNICE 8
+.ad
+.fi
+.SH NAME
+tcpnice
+\-
+slow down TCP connections on a LAN
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBtcpnice\fR [\fB-A\fR] [\fB-I\fR] [\fB-M\fR] [\fB-i \fIinterface\fR]
+\fIexpression\fR
+.SH DESCRIPTION
+.ad
+.fi
+\fBtcpnice\fR slows down specified TCP connections on a LAN via
+"active" traffic shaping.
+.SH OPTIONS
+.IP \fB-A\fR
+Inject TCP tiny window advertisements.
+.IP \fB-I\fR
+Inject ICMP source quench replies.
+.IP \fB-M\fR
+Inject ICMP fragmentation-needed replies with tiny next-hop MTUs.
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP \fIexpression\fR
+Specify a tcpdump(8) filter expression to select the connections to
+slow down.
+.LP
+If no attack type is given, all attacks will be enabled.
+.SH "SEE ALSO"
+dsniff(8), tcpkill(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

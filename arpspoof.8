@@ -1,0 +1,37 @@
+.TH ARPSPOOF 8
+.ad
+.fi
+.SH NAME
+arpspoof
+\-
+intercept packets on a switched LAN
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBarpspoof\fR [\fB-i \fIinterface\fR] [\fB-t \fItarget\fR] \fIhost\fR
+.SH DESCRIPTION
+.ad
+.fi
+\fBarpspoof\fR redirects packets from a target host (or all hosts)
+on the LAN intended for another host on the LAN by forging ARP
+replies.  This is an extremely effective way of sniffing traffic on a
+switch.
+.LP
+Kernel IP forwarding (or a userland program which accomplishes the
+same, e.g. fragrouter(8)) must be turned on ahead of time.
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to use.
+.IP "\fB-t \fItarget\fR"
+Specify a particular host to ARP poison (if not specified, all hosts
+on the LAN).
+.IP \fIhost\fR
+Specify the host you wish to intercept packets for (usually the local
+gateway).
+.SH "SEE ALSO"
+dsniff(8), fragrouter(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

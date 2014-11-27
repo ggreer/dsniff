@@ -1,0 +1,34 @@
+.TH TCPKILL 8
+.ad
+.fi
+.SH NAME
+tcpkill
+\-
+kill TCP connections on a LAN
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBtcpkill\fR [\fB-i \fIinterface\fR] [\fB-1\fR...\fB9\fR] \fIexpression\fR
+.SH DESCRIPTION
+.ad
+.fi
+\fBtcpkill\fR kills specified in-progress TCP connections (useful for
+libnids-based applications which require a full TCP 3-whs for TCB
+creation).
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP \fB-1\fR...\fB9\fR
+Specify the degree of brute force to use in killing a connection. Fast
+connections may require a higher number in order to land a RST in the
+moving receive window. Default is 3.
+.IP \fIexpression\fR
+Specify a tcpdump(8) filter expression to select the connections to
+kill.
+.SH "SEE ALSO"
+dsniff(8), tcpnice(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

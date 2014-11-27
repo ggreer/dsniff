@@ -1,0 +1,36 @@
+.TH SSHMITM 8
+.ad
+.fi
+.SH NAME
+sshmitm
+\-
+SSH monkey-in-the-middle
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBsshmitm\fR [\fB-d\fR] [\fB-I\fR] [\fB-p \fIport\fR] host [\fIport\fR]
+.SH DESCRIPTION
+.ad
+.fi
+\fBsshmitm\fR proxies and sniffs SSH traffic redirected by
+dnsspoof(8), capturing SSH password logins, and optionally hijacking
+interactive sessions. Only SSH protocol version 1 is (or ever will be)
+supported - this program is far too evil already.
+.SH OPTIONS
+.IP \fB-d\fR
+Enable verbose debugging output.
+.IP \fB-I\fR
+Monitor / hijack an interactive session.
+.IP "\fB-p \fIport\fR"
+Specify the local port to listen on.
+.IP \fIhost\fR
+Specify the remote host to relay connections to.
+.IP \fIport\fR
+Specify the remote port to relay connections to.
+.SH "SEE ALSO"
+dsniff(8), dnsspoof(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

@@ -1,0 +1,113 @@
+
+dsniff-2.3
+----------
+
+i wrote these tools with honest intentions - to audit my own network,
+and to demonstrate the insecurity of cleartext / weakly-encrypted
+network protocols and ad-hoc PKI. please do not abuse this software.
+
+these programs require:
+
+      Berkeley DB - http://www.sleepycat.com/
+      OpenSSL - http://www.openssl.org/
+      libpcap - http://www.tcpdump.org/
+      libnids - http://www.packetfactory.net/Projects/Libnids/
+      libnet - http://www.packetfactory.net/Projects/Libnet/
+
+built and tested on OpenBSD, Linux, and Solaris. YMMV.
+
+what's here:
+
+arpspoof
+	redirect packets from a target host (or all hosts) on the LAN
+	intended for another local host by forging ARP replies. this
+	is an extremely effective way of sniffing traffic on a switch.
+	kernel IP forwarding (or a userland program which accomplishes
+	the same, e.g. fragrouter :-) must be turned on ahead of time.
+
+dnsspoof
+	forge replies to arbitrary DNS address / pointer queries on
+	the LAN. this is useful in bypassing hostname-based access
+	controls, or in implementing a variety of man-in-the-middle
+	attacks (HTTP, HTTPS, SSH, Kerberos, etc).
+
+dsniff
+	password sniffer. handles FTP, Telnet, SMTP, HTTP, POP,
+	poppass, NNTP, IMAP, SNMP, LDAP, Rlogin, RIP, OSPF, PPTP
+	MS-CHAP, NFS, VRRP, YP/NIS, SOCKS, X11, CVS, IRC, AIM, ICQ,
+	Napster, PostgreSQL, Meeting Maker, Citrix ICA, Symantec
+	pcAnywhere, NAI Sniffer, Microsoft SMB, Oracle SQL*Net, Sybase
+	and Microsoft SQL auth info.
+
+	dsniff automatically detects and minimally parses each
+	application protocol, only saving the interesting bits, and
+	uses Berkeley DB as its output file format, only logging
+	unique authentication attempts. full TCP/IP reassembly is
+	provided by libnids(3) (likewise for the following tools as
+	well).
+
+filesnarf
+	saves selected files sniffed from NFS traffic in the current
+	working directory.
+
+macof
+	flood the local network with random MAC addresses (causing
+	some switches to fail open in repeating mode, facilitating
+	sniffing). a straight C port of the original Perl Net::RawIP
+	macof program.
+
+mailsnarf
+	a fast and easy way to violate the Electronic Communications
+	Privacy Act of 1986 (18 USC 2701-2711), be careful. outputs
+	selected messages sniffed from SMTP and POP traffic in Berkeley
+	mbox format, suitable for offline browsing with your favorite
+	mail reader (mail -f, pine, etc.).
+
+msgsnarf
+	record selected messages from sniffed AOL Instant Messenger,
+	ICQ 2000, IRC, and Yahoo! Messenger chat sessions.
+
+sshmitm
+	SSH monkey-in-the-middle. proxies and sniffs SSH traffic
+	redirected by dnsspoof(8), capturing SSH password logins, and
+	optionally hijacking interactive sessions. only SSH protocol
+	version 1 is (or ever will be) supported - this program is far
+	too evil already.
+
+sshow
+	SSH traffic analysis tool. analyzes encrypted SSH-1 and SSH-2
+	traffic, identifying authentication attempts, the lengths of
+	passwords entered in interactive sessions, and command line
+	lengths.
+
+tcpkill
+	kills specified in-progress TCP connections (useful for
+	libnids-based applications which require a full TCP 3-whs for
+	TCB creation).
+
+tcpnice
+	slow down specified TCP connections via "active" traffic
+	shaping. forges tiny TCP window advertisements, and optionally
+	ICMP source quench replies.
+
+urlsnarf
+	output selected URLs sniffed from HTTP traffic in CLF
+	(Common Log Format, used by almost all web servers), suitable
+	for offline post-processing with your favorite web log
+	analysis tool (analog, wwwstat, etc.).
+
+webmitm
+	HTTP / HTTPS monkey-in-the-middle. transparently proxies and
+	sniffs web traffic redirected by dnsspoof(8), capturing most
+	"secure" SSL-encrypted webmail logins and form submissions.
+
+webspy
+	sends URLs sniffed from a client to your local Netscape
+	browser for display, updated in real-time (as the target
+	surfs, your browser surfs along with them, automagically).
+	a fun party trick. :-)
+
+-d.
+
+---
+http://www.monkey.org/~dugsong/

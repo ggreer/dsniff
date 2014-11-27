@@ -1,0 +1,34 @@
+.TH MSGSNARF 8
+.ad
+.fi
+.SH NAME
+msgsnarf
+\-
+sniff chat messages
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBmsgsnarf\fR [\fB-i \fIinterface\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+.SH DESCRIPTION
+.ad
+.fi
+\fBmsgsnarf\fR records selected messages from AOL Instant
+Messenger, ICQ 2000, IRC, MSN Messenger, or Yahoo Messenger chat
+sessions.
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP \fB-v\fR
+"Versus" mode. Invert the sense of matching, to select non-matching
+messages.
+.IP \fIpattern\fR
+Specify regular expression for message matching.
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.SH "SEE ALSO"
+dsniff(8)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>

@@ -1,0 +1,15 @@
+$Id: TODO,v 1.2 2000/12/02 06:29:30 dugsong Exp $
+
+- finish conversion to buf interface
+
+- rework half-duplex tcp_raw reassembly, for *snarf [-c]
+
+- NTLM handling in telnet, FTP, HTTP, SMB, NNTP, etc. non-trivial
+  since dsniff only examines client traffic :-/
+
+- arpspoof [host ...]
+
+- more protocols: atalk, MAPI, etc.?
+
+- reverse more of AOL's OSCAR protocol for dsniff and msgsnarf
+

@@ -1,0 +1,81 @@
+.TH DSNIFF 8
+.ad
+.fi
+.SH NAME
+dsniff
+\-
+password sniffer
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBdsniff\fR [\fB-c\fR] [\fB-d\fR] [\fB-m\fR] [\fB-n\fR] [\fB-i
+\fIinterface\fR] [\fB-s \fIsnaplen\fR] [\fB-f \fIservices\fR]
+[\fB-t \fItrigger[,...]\fR]]
+[\fB-r\fR|\fB-w\fR \fIsavefile\fR] [\fIexpression\fR]
+.SH DESCRIPTION
+.ad
+.fi
+\fBdsniff\fR is a password sniffer which handles FTP, Telnet, SMTP,
+HTTP, POP, poppass, NNTP, IMAP, SNMP, LDAP, Rlogin, RIP, OSPF, PPTP
+MS-CHAP, NFS, VRRP, YP/NIS, SOCKS, X11, CVS, IRC, AIM, ICQ, Napster,
+PostgreSQL, Meeting Maker, Citrix ICA, Symantec pcAnywhere, NAI
+Sniffer, Microsoft SMB, Oracle SQL*Net, Sybase and Microsoft SQL
+protocols.
+.LP
+\fBdsniff\fR automatically detects and minimally parses each
+application protocol, only saving the interesting bits, and uses
+Berkeley DB as its output file format, only logging unique
+authentication attempts. Full TCP/IP reassembly is provided by
+libnids(3).
+.LP
+I wrote \fBdsniff\fR with honest intentions - to audit my own network,
+and to demonstrate the insecurity of cleartext network protocols.
+Please do not abuse this software.
+.SH OPTIONS
+.IP \fB-c\fR
+Perform half-duplex TCP stream reassembly, to handle asymmetrically
+routed traffic (such as when using arpspoof(8) to intercept client
+traffic bound for the local gateway).
+.IP \fB-d\fR
+Enable debugging mode.
+.IP \fB-m\fR
+Enable automatic protocol detection.
+.IP \fB-n\fR
+Do not resolve IP addresses to hostnames.
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP "\fB-s \fIsnaplen\fR"
+Analyze at most the first \fIsnaplen\fR bytes of each TCP connection,
+rather than the default of 1024.
+.IP "\fB-f \fIservices\fR"
+Load triggers from a \fIservices\fR file.
+.IP "\fB -t \fItrigger\fR[,...]"
+Load triggers from a comma-separated list, specified as
+\fIport\fR/\fIproto\fR=\fIservice\fR (e.g. 80/tcp=http).
+.IP "\fB-r \fIsavefile\fR"
+Read sniffed sessions from a \fIsavefile\fR created with the \fB-w\fR
+option.
+.IP "\fB-w \fIfile\fR"
+Write sniffed sessions to \fIsavefile\fR rather than parsing and
+printing them out.
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.LP
+On a hangup signal \fBdsniff\fR will dump its current trigger table to
+\fIdsniff.services\fR.
+.SH FILES
+.IP \fI/usr/local/lib/dsniff.services\fR
+Default trigger table
+.IP \fI/usr/local/lib/dsniff.magic\fR
+Network protocol magic
+.SH "SEE ALSO"
+arpspoof(8), libnids(3), services(5), magic(5)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>
+.SH BUGS
+\fBdsniff\fR's automatic protocol detection feature is based on the
+classic file(1) command by Ian Darwin, and shares its historical
+limitations and bugs.

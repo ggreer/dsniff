@@ -1,0 +1,41 @@
+.TH DNSSPOOF 8
+.ad
+.fi
+.SH NAME
+dnsspoof
+\-
+forge replies to DNS address / pointer queries
+.SH SYNOPSIS
+.na
+.nf
+.fi
+\fBdnsspoof\fR [\fB-i \fIinterface\fR] [\fB-f \fIhostsfile\fR] 
+[\fIexpression\fR]
+.SH DESCRIPTION
+.ad
+.fi
+\fBdnsspoof\fR forges replies to arbitrary DNS address / pointer queries
+on the LAN. This is useful in bypassing hostname-based access controls,
+or in implementing a variety of man-in-the-middle attacks.
+.SH OPTIONS
+.IP "\fB-i \fIinterface\fR"
+Specify the interface to use.
+.IP "\fB-f \fIhostsfile\fR"
+Specify the pathname of a file in hosts(5) format. Only one hostname
+allowed per line (no aliases), although hostnames may contain
+wildcards (such as \fI*.doubleclick.net\fR).
+.IP "\fIexpression\fR"
+Specify a tcpdump(8) filter expression to select traffic to sniff.
+.LP
+If no \fIhostsfile\fR is specified, replies will be forged for all
+address queries on the LAN with an answer of the local machine's IP
+address.
+.SH FILES
+.IP \fI/usr/local/lib/dnsspoof.hosts\fR
+Sample hosts file.
+.SH "SEE ALSO"
+dsniff(8), hosts(5)
+.SH AUTHOR
+.na
+.nf
+Dug Song <dugsong@monkey.org>
