@@ -113,7 +113,7 @@ arp_find(in_addr_t ip, struct ether_addr *mac)
 	int i = 0;
 
 	do {
-		if (arp_cache_lookup(ip, mac) == 0)
+		if (arp_cache_lookup(ip, mac, intf) == 0)
 			return (1);
 #ifdef __linux__
 		/* XXX - force the kernel to arp. feh. */
