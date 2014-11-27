@@ -57,6 +57,7 @@ AC_CHECK_LIB(socket, socket)
 AC_CHECK_LIB(nsl, gethostbyname)
 dnl XXX - feh, everything except OpenBSD sux.
 AC_CHECK_LIB(resolv, dn_expand)
+AC_CHECK_LIB(resolv, __dn_expand)
 AC_REPLACE_FUNCS(dirname strlcpy strlcat strsep)
 needmd5=no
 AC_CHECK_FUNCS(MD5Update, , [needmd5=yes])
