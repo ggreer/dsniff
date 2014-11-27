@@ -10,8 +10,8 @@ http		80/tcp
 ospf		89/ip
 http		98/tcp
 poppass		106/tcp
-pop		109/tcp
-pop		110/tcp
+pop2		109/tcp
+pop3		110/tcp
 portmap		111/tcp
 portmap		-111/tcp
 portmap		111/udp
