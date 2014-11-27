@@ -12,7 +12,7 @@
 #define PATHNAMES_H
 
 #ifndef DSNIFF_LIBDIR
-#define DSNIFF_LIBDIR		"/usr/local/lib/"
+#define DSNIFF_LIBDIR		"/usr/share/dsniff/"
 #endif
 
 #define DSNIFF_SERVICES		"dsniff.services"

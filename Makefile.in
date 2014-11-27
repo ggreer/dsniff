@@ -11,7 +11,7 @@ VPATH           = @srcdir@
 install_prefix  =
 prefix          = @prefix@
 exec_prefix	= @exec_prefix@
-libdir		= @libdir@
+libdir		= $(prefix)/share/dsniff
 sbindir         = @sbindir@
 mandir		= @mandir@
 
@@ -37,8 +37,7 @@ SSLLIB	= @SSLLIB@
 X11INC	= @X_CFLAGS@
 X11LIB	= @X_LIBS@ @X_PRE_LIBS@ -lXmu -lX11 @X_EXTRA_LIBS@
 
-INCS	= -I. $(NIDSINC) $(PCAPINC) $(LNETINC) $(DBINC) $(SSLINC) $(X11INC) \
-	  -I$(srcdir)/missing
+INCS	= -I. $(X11INC) -I$(srcdir)/missing 
 LIBS	= @LIBS@ -L$(srcdir) -lmissing
 
 INSTALL	= @INSTALL@
