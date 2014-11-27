@@ -23,6 +23,7 @@
 #include <nids.h>
 #include <pcap.h>
 #include <pcaputil.h>
+#include <time.h>
 
 #include "buf.h"
 #include "decode.h"

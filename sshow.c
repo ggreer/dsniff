@@ -15,6 +15,7 @@
 
 #include <sys/types.h>
 #include <sys/times.h>
+#include <time.h>
 
 #include <netinet/in_systm.h>
 #include <netinet/in.h>
