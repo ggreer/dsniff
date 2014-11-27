@@ -224,7 +224,7 @@ client_to_server(struct tcp_stream *ts, struct session *session,
 	if (debug)
 		printf("- %s -> %s: DATA (%s bytes, %.2f seconds)\n",
 			s_saddr(ts), s_daddr(ts), s_range(plain_range),
-			(float)delay / CLK_TCK);
+			(float)delay / CLOCKS_PER_SEC);
 	if (debug > 1)
 		print_data(&ts->server, cipher_size);
 
@@ -273,7 +273,7 @@ server_to_client(struct tcp_stream *ts, struct session *session,
 	if (debug)
 		printf("- %s <- %s: DATA (%s bytes, %.2f seconds)\n",
 		       s_saddr(ts), s_daddr(ts), s_range(plain_range),
-		       (float)delay / CLK_TCK);
+		       (float)delay / CLOCKS_PER_SEC);
 	if (debug > 1)
 		print_data(&ts->client, cipher_size);
 	
@@ -302,7 +302,7 @@ server_to_client(struct tcp_stream *ts, struct session *session,
 	
 	if (session->state == 1 &&
 #ifdef USE_TIMING
-	    now - get_history(session, 2)->timestamp >= CLK_TCK &&
+	    now - get_history(session, 2)->timestamp >= CLOCKS_PER_SEC &&
 #endif
 	    session->protocol == 1 &&
 	    (session->history.directions & 7) == 5 &&
