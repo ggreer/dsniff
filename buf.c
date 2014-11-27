@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <err.h>
+#include <string.h>
 
 #include "buf.h"
 

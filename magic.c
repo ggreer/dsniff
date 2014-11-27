@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strlcpy.h>
 #include <ctype.h>
 #include <time.h>
 #include <err.h>

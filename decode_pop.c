@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <strlcat.h>
 
 #include "base64.h"
 #include "options.h"

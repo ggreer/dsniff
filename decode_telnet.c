@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <strlcpy.h>
 
 #include "options.h"
 #include "decode.h"

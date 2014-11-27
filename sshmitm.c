@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <strlcat.h>
 
 #include "buf.h"
 #include "record.h"

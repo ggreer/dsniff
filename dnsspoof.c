@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <strlcpy.h>
 #include <resolv.h>
 #include <err.h>
 #include <libnet.h>
