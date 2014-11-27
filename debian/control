@@ -1,0 +1,33 @@
+Source: dsniff
+Section: net
+Priority: extra
+Maintainer: Luciano Bello <luciano@debian.org>
+Standards-Version: 3.7.2
+Build-Depends: libdb4.6-dev, libpcap0.8-dev, libnids-dev, libssl-dev, libxmu-dev, libnet1-dev, debhelper (>= 4.0.0), dpatch
+
+Package: dsniff
+Architecture: any
+Depends: ${shlibs:Depends}, openssl
+Recommends: libx11-6
+Description: Various tools to sniff network traffic for cleartext insecurities
+ This package contains several tools to listen to and create network traffic:
+ .
+  * arpspoof  - Send out unrequested (and possibly forged) arp replies.
+  * dnsspoof  - forge replies to arbitrary DNS address / pointer queries
+              on the Local Area Network.
+  * dsniff    - password sniffer for several protocols.
+  * filesnarf - saves selected files sniffed from NFS traffic.
+  * macof     - flood the local network with random MAC addresses.
+  * mailsnarf - sniffs mail on the LAN and stores it in mbox format.
+  * msgsnarf  - record selected messages from different Instant Messengers.
+  * sshmitm   - SSH monkey-in-the-middle. proxies and sniffs SSH traffic.
+  * sshow     - SSH traffic analyser.
+  * tcpkill   - kills specified in-progress TCP connections.
+  * tcpnice   - slow down specified TCP connections via "active"
+              traffic shaping.
+  * urlsnarf  - output selected URLs sniffed from HTTP traffic in CLF.
+  * webmitm   - HTTP / HTTPS monkey-in-the-middle. transparently proxies.
+  * webspy    - sends URLs sniffed from a client to your local browser 
+              (requires libx11-6 installed).
+ .
+ Please do not abuse this software.

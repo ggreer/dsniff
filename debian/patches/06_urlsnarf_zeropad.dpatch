@@ -1,0 +1,18 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06_urlsnarf_zeropad.dpatch by Steve Kemp <skx@debian.org>
+##
+## DP: urlsnarf: zero-pad date, Closes #298605.
+
+@DPATCH@
+diff -urNad --exclude=CVS --exclude=.svn ./urlsnarf.c /tmp/dpep-work.v2ql8z/dsniff-2.4b1/urlsnarf.c
+--- ./urlsnarf.c	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.v2ql8z/dsniff-2.4b1/urlsnarf.c	2005-06-23 04:04:07.000000000 +0000
+@@ -68,7 +68,7 @@
+ 		 t->tm_hour - gmt.tm_hour);
+ 	tz = hours * 60 + t->tm_min - gmt.tm_min;
+ 	
+-	len = strftime(tstr, sizeof(tstr), "%e/%b/%Y:%X", t);
++	len = strftime(tstr, sizeof(tstr), "%d/%b/%Y:%X", t);
+ 	if (len < 0 || len > sizeof(tstr) - 5)
+ 		return (NULL);
+ 	

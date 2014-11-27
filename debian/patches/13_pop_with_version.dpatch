@@ -1,0 +1,33 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 13_pop_with_version.dpatch by Luciano Bello <luciano@linux.org.ar>
+##
+## DP: distinguish between pop versions
+
+@DPATCH@
+diff -urNad trunk~/decode.c trunk/decode.c
+--- trunk~/decode.c	2007-08-11 18:43:41.000000000 -0300
++++ trunk/decode.c	2007-08-11 19:01:08.000000000 -0300
+@@ -63,7 +63,8 @@
+ 	{ "http",	decode_http },
+ 	{ "ospf",	decode_ospf },
+ 	{ "poppass",	decode_poppass },
+-	{ "pop",	decode_pop },
++	{ "pop2",	decode_pop },
++	{ "pop3",	decode_pop },
+ 	{ "nntp",	decode_nntp },
+ 	{ "smb",	decode_smb },
+ 	{ "imap",	decode_imap },
+diff -urNad trunk~/dsniff.services trunk/dsniff.services
+--- trunk~/dsniff.services	2007-08-11 18:43:41.000000000 -0300
++++ trunk/dsniff.services	2007-08-11 19:00:21.000000000 -0300
+@@ -10,8 +10,8 @@
+ ospf		89/ip
+ http		98/tcp
+ poppass		106/tcp
+-pop		109/tcp
+-pop		110/tcp
++pop2		109/tcp
++pop3		110/tcp
+ portmap		111/tcp
+ portmap		-111/tcp
+ portmap		111/udp

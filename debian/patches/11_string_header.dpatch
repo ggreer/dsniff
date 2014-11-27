@@ -1,0 +1,185 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 11_string_header.dpatch by Luciano Bello <luciano@linux.org.ar>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Aviod the "implicit declaration of function 'str*'" warning
+
+@DPATCH@
+diff -urNad dsniff-2.4b1+debian~/arp.c dsniff-2.4b1+debian/arp.c
+--- dsniff-2.4b1+debian~/arp.c	2007-06-17 16:22:49.000000000 -0300
++++ dsniff-2.4b1+debian/arp.c	2007-06-17 16:22:49.000000000 -0300
+@@ -34,6 +34,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <string.h>
+ 
+ #include "arp.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/buf.c dsniff-2.4b1+debian/buf.c
+--- dsniff-2.4b1+debian~/buf.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/buf.c	2007-06-17 16:22:49.000000000 -0300
+@@ -17,6 +17,7 @@
+ #include <unistd.h>
+ #include <ctype.h>
+ #include <err.h>
++#include <string.h>
+ 
+ #include "buf.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/decode_nntp.c dsniff-2.4b1+debian/decode_nntp.c
+--- dsniff-2.4b1+debian~/decode_nntp.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_nntp.c	2007-06-17 16:22:49.000000000 -0300
+@@ -15,6 +15,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
+ 
+ #include "base64.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/decode_pop.c dsniff-2.4b1+debian/decode_pop.c
+--- dsniff-2.4b1+debian~/decode_pop.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_pop.c	2007-06-17 16:22:49.000000000 -0300
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
+ 
+ #include "base64.h"
+ #include "options.h"
+diff -urNad dsniff-2.4b1+debian~/decode_rlogin.c dsniff-2.4b1+debian/decode_rlogin.c
+--- dsniff-2.4b1+debian~/decode_rlogin.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_rlogin.c	2007-06-17 16:22:49.000000000 -0300
+@@ -14,6 +14,8 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcpy.h>
++#include <strlcat.h>
+ 
+ #include "options.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/decode_smb.c dsniff-2.4b1+debian/decode_smb.c
+--- dsniff-2.4b1+debian~/decode_smb.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_smb.c	2007-06-17 16:22:49.000000000 -0300
+@@ -15,6 +15,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
+ 
+ #include "decode.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/decode_smtp.c dsniff-2.4b1+debian/decode_smtp.c
+--- dsniff-2.4b1+debian~/decode_smtp.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_smtp.c	2007-06-17 16:22:49.000000000 -0300
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
+ 
+ #include "base64.h"
+ #include "options.h"
+diff -urNad dsniff-2.4b1+debian~/decode_sniffer.c dsniff-2.4b1+debian/decode_sniffer.c
+--- dsniff-2.4b1+debian~/decode_sniffer.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_sniffer.c	2007-06-17 16:22:49.000000000 -0300
+@@ -15,6 +15,8 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
++#include <strlcpy.h>
+ 
+ #include "base64.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/decode_socks.c dsniff-2.4b1+debian/decode_socks.c
+--- dsniff-2.4b1+debian~/decode_socks.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_socks.c	2007-06-17 16:22:49.000000000 -0300
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
+ 
+ #include "decode.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/decode_tds.c dsniff-2.4b1+debian/decode_tds.c
+--- dsniff-2.4b1+debian~/decode_tds.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_tds.c	2007-06-17 16:22:49.000000000 -0300
+@@ -18,6 +18,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
+ 
+ #include "decode.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/decode_telnet.c dsniff-2.4b1+debian/decode_telnet.c
+--- dsniff-2.4b1+debian~/decode_telnet.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_telnet.c	2007-06-17 16:22:49.000000000 -0300
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcpy.h>
+ 
+ #include "options.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/decode_x11.c dsniff-2.4b1+debian/decode_x11.c
+--- dsniff-2.4b1+debian~/decode_x11.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_x11.c	2007-06-17 16:22:49.000000000 -0300
+@@ -14,6 +14,8 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <strlcat.h>
++#include <strlcpy.h>
+ 
+ #include "decode.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/dnsspoof.c dsniff-2.4b1+debian/dnsspoof.c
+--- dsniff-2.4b1+debian~/dnsspoof.c	2007-06-17 16:22:49.000000000 -0300
++++ dsniff-2.4b1+debian/dnsspoof.c	2007-06-17 16:22:49.000000000 -0300
+@@ -20,6 +20,7 @@
+ #include <stdlib.h>
+ #include <signal.h>
+ #include <string.h>
++#include <strlcpy.h>
+ #include <resolv.h>
+ #include <err.h>
+ #include <libnet.h>
+diff -urNad dsniff-2.4b1+debian~/magic.c dsniff-2.4b1+debian/magic.c
+--- dsniff-2.4b1+debian~/magic.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/magic.c	2007-06-17 16:22:49.000000000 -0300
+@@ -36,6 +36,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <strlcpy.h>
+ #include <ctype.h>
+ #include <time.h>
+ #include <err.h>
+diff -urNad dsniff-2.4b1+debian~/missing/strlcat.h dsniff-2.4b1+debian/missing/strlcat.h
+--- dsniff-2.4b1+debian~/missing/strlcat.h	1969-12-31 21:00:00.000000000 -0300
++++ dsniff-2.4b1+debian/missing/strlcat.h	2007-06-17 16:22:49.000000000 -0300
+@@ -0,0 +1 @@
++size_t strlcat(char *dst, const char *src, size_t siz);
+diff -urNad dsniff-2.4b1+debian~/missing/strlcpy.h dsniff-2.4b1+debian/missing/strlcpy.h
+--- dsniff-2.4b1+debian~/missing/strlcpy.h	1969-12-31 21:00:00.000000000 -0300
++++ dsniff-2.4b1+debian/missing/strlcpy.h	2007-06-17 16:22:49.000000000 -0300
+@@ -0,0 +1 @@
++size_t strlcpy(char *dst, const char *src, size_t siz);
+diff -urNad dsniff-2.4b1+debian~/sshmitm.c dsniff-2.4b1+debian/sshmitm.c
+--- dsniff-2.4b1+debian~/sshmitm.c	2007-06-17 16:22:49.000000000 -0300
++++ dsniff-2.4b1+debian/sshmitm.c	2007-06-17 16:22:49.000000000 -0300
+@@ -24,6 +24,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <strlcat.h>
+ 
+ #include "buf.h"
+ #include "record.h"

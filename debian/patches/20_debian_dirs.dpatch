@@ -1,0 +1,67 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 20_debian_dirs.dpatch by Steve Kemp <skx@debian.org>
+##
+## DP: Adapt to Debian directory structure.
+
+@DPATCH@
+diff -urNad --exclude=CVS --exclude=.svn ./Makefile.in /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/Makefile.in
+--- ./Makefile.in	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/Makefile.in	2005-06-23 04:17:14.000000000 +0000
+@@ -11,7 +11,7 @@
+ install_prefix  =
+ prefix          = @prefix@
+ exec_prefix	= @exec_prefix@
+-libdir		= @libdir@
++libdir		= $(prefix)/share/dsniff
+ sbindir         = @sbindir@
+ mandir		= @mandir@
+ 
+@@ -37,8 +37,7 @@
+ X11INC	= @X_CFLAGS@
+ X11LIB	= @X_LIBS@ @X_PRE_LIBS@ -lXmu -lX11 @X_EXTRA_LIBS@
+ 
+-INCS	= -I. $(NIDSINC) $(PCAPINC) $(LNETINC) $(DBINC) $(SSLINC) $(X11INC) \
+-	  -I$(srcdir)/missing
++INCS	= -I. $(X11INC) -I$(srcdir)/missing 
+ LIBS	= @LIBS@ -L$(srcdir) -lmissing
+ 
+ INSTALL	= @INSTALL@
+diff -urNad --exclude=CVS --exclude=.svn ./dnsspoof.8 /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/dnsspoof.8
+--- ./dnsspoof.8	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/dnsspoof.8	2005-06-23 04:17:37.000000000 +0000
+@@ -31,7 +31,7 @@
+ address queries on the LAN with an answer of the local machine's IP
+ address.
+ .SH FILES
+-.IP \fI/usr/local/lib/dnsspoof.hosts\fR
++.IP \fI/usr/share/dsniff/dnsspoof.hosts\fR
+ Sample hosts file.
+ .SH "SEE ALSO"
+ dsniff(8), hosts(5)
+diff -urNad --exclude=CVS --exclude=.svn ./dsniff.8 /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/dsniff.8
+--- ./dsniff.8	2005-06-23 04:17:06.000000000 +0000
++++ /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/dsniff.8	2005-06-23 04:18:21.000000000 +0000
+@@ -68,9 +68,9 @@
+ On a hangup signal \fBdsniff\fR will dump its current trigger table to
+ \fIdsniff.services\fR.
+ .SH FILES
+-.IP \fI/usr/local/lib/dsniff.services\fR
++.IP \fI/usr/share/dsniff/dsniff.services\fR
+ Default trigger table
+-.IP \fI/usr/local/lib/dsniff.magic\fR
++.IP \fI/usr/share/dsniff/dsniff.magic\fR
+ Network protocol magic
+ .SH "SEE ALSO"
+ arpspoof(8), libnids(3), services(5), magic(5)
+diff -urNad --exclude=CVS --exclude=.svn ./pathnames.h /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/pathnames.h
+--- ./pathnames.h	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.ZWXwvR/dsniff-2.4b1/pathnames.h	2005-06-23 04:17:25.000000000 +0000
+@@ -12,7 +12,7 @@
+ #define PATHNAMES_H
+ 
+ #ifndef DSNIFF_LIBDIR
+-#define DSNIFF_LIBDIR		"/usr/local/lib/"
++#define DSNIFF_LIBDIR		"/usr/share/dsniff/"
+ #endif
+ 
+ #define DSNIFF_SERVICES		"dsniff.services"

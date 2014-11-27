@@ -1,0 +1,26 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 09_sysconf_clocks.dpatch by  <kees@ubuntu.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad dsniff-2.4b1~/sshow.c dsniff-2.4b1/sshow.c
+--- dsniff-2.4b1~/sshow.c	2001-03-18 22:52:15.000000000 -0800
++++ dsniff-2.4b1/sshow.c	2006-10-12 13:24:29.299111443 -0700
+@@ -216,6 +216,7 @@
+ {
+ 	clock_t delay;
+ 	int payload;
++    long CLK_TCK= sysconf(_SC_CLK_TCK);
+ 
+ 	delay = add_history(session, 0, cipher_size, plain_range);
+ 
+@@ -264,6 +265,7 @@
+ 	clock_t delay;
+ 	int skip;
+ 	range string_range;
++    long CLK_TCK= sysconf(_SC_CLK_TCK);
+ 	
+ 	delay = add_history(session, 1, cipher_size, plain_range);
+ 	

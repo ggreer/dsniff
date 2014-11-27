@@ -1,0 +1,18 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 08_openssl-0.9.8.dpatch by  <kees@ubuntu.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad dsniff-2.4b1~/ssh.c dsniff-2.4b1/ssh.c
+--- dsniff-2.4b1~/ssh.c	2006-10-12 13:21:57.000000000 -0700
++++ dsniff-2.4b1/ssh.c	2006-10-12 13:22:46.441893077 -0700
+@@ -16,6 +16,7 @@
+ #include <openssl/ssl.h>
+ #include <openssl/err.h>
+ #include <openssl/rand.h>
++#include <openssl/md5.h>
+ 
+ #include <err.h>
+ #include <errno.h>

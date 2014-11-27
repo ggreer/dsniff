@@ -1,0 +1,30 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 08_checksum.dpatch by Piotr Engelking <inkerman42@gmail.com>
+##
+## DP: Disable the filtering packets with incorrect checksum (Closes: #372536).
+
+@DPATCH@
+diff -ur dsniff-2.4b1/urlsnarf.c dsniff/urlsnarf.c
+--- dsniff-2.4b1/urlsnarf.c	2006-09-21 01:50:01.000000000 +0200
++++ dsniff/urlsnarf.c	2006-09-21 01:51:13.000000000 +0200
+@@ -200,6 +200,7 @@
+ 	extern char *optarg;
+ 	extern int optind;
+ 	int c;
++	struct nids_chksum_ctl chksum_ctl;
+ 	
+ 	while ((c = getopt(argc, argv, "i:p:nvh?V")) != -1) {
+ 		switch (c) {
+@@ -260,6 +261,12 @@
+                 }
+         }
+ 
++        chksum_ctl.netaddr = 0;
++        chksum_ctl.mask = 0;
++        chksum_ctl.action = NIDS_DONT_CHKSUM;
++
++        nids_register_chksum_ctl(&chksum_ctl, 1);
++
+ 	nids_run();
+ 	
+ 	/* NOTREACHED */

@@ -1,0 +1,18 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_mailsnarf_corrupt.dpatch by Steve Kemp <skx@debian.org>
+##
+## DP: mailsnarf does not parse mail correctly, Closes #149330.
+
+@DPATCH@
+diff -urNad --exclude=CVS --exclude=.svn ./mailsnarf.c /tmp/dpep-work.GpGl80/dsniff-2.4b1/mailsnarf.c
+--- ./mailsnarf.c	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.GpGl80/dsniff-2.4b1/mailsnarf.c	2005-06-23 04:05:16.000000000 +0000
+@@ -178,7 +178,7 @@
+ 	if (smtp->state != SMTP_DATA) {
+ 		while ((i = buf_index(&buf, "\r\n", 2)) >= 0) {
+ 			line = buf_tok(&buf, NULL, i + 2);
+-			line->base[line->end] = '\0';
++			line->base[line->end-1] = '\0';
+ 			p = buf_ptr(line);
+ 			
+ 			if (strncasecmp(p, "RSET", 4) == 0) {

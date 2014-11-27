@@ -1,0 +1,73 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 12_arpa_inet_header.dpatch by Luciano Bello <luciano@linux.org.ar>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: aviod the "implicit declaration of function 'ntohs'" warning
+
+@DPATCH@
+diff -urNad dsniff-2.4b1+debian~/decode_aim.c dsniff-2.4b1+debian/decode_aim.c
+--- dsniff-2.4b1+debian~/decode_aim.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_aim.c	2007-06-17 16:26:46.000000000 -0300
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <arpa/inet.h>
+ 
+ #include "hex.h"
+ #include "buf.h"
+diff -urNad dsniff-2.4b1+debian~/decode_mmxp.c dsniff-2.4b1+debian/decode_mmxp.c
+--- dsniff-2.4b1+debian~/decode_mmxp.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_mmxp.c	2007-06-17 16:26:46.000000000 -0300
+@@ -21,6 +21,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <arpa/inet.h>
+ 
+ #include "buf.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/decode_pptp.c dsniff-2.4b1+debian/decode_pptp.c
+--- dsniff-2.4b1+debian~/decode_pptp.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_pptp.c	2007-06-17 16:26:46.000000000 -0300
+@@ -16,6 +16,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <arpa/inet.h>
+ 
+ #include "buf.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/decode_tds.c dsniff-2.4b1+debian/decode_tds.c
+--- dsniff-2.4b1+debian~/decode_tds.c	2007-06-17 16:26:46.000000000 -0300
++++ dsniff-2.4b1+debian/decode_tds.c	2007-06-17 16:26:46.000000000 -0300
+@@ -19,6 +19,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <strlcat.h>
++#include <arpa/inet.h>
+ 
+ #include "decode.h"
+ 
+diff -urNad dsniff-2.4b1+debian~/decode_vrrp.c dsniff-2.4b1+debian/decode_vrrp.c
+--- dsniff-2.4b1+debian~/decode_vrrp.c	2007-06-17 16:22:39.000000000 -0300
++++ dsniff-2.4b1+debian/decode_vrrp.c	2007-06-17 16:26:46.000000000 -0300
+@@ -15,6 +15,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <arpa/inet.h>
+ 
+ #include "buf.h"
+ #include "decode.h"
+diff -urNad dsniff-2.4b1+debian~/ssh.c dsniff-2.4b1+debian/ssh.c
+--- dsniff-2.4b1+debian~/ssh.c	2007-06-17 16:26:46.000000000 -0300
++++ dsniff-2.4b1+debian/ssh.c	2007-06-17 16:26:46.000000000 -0300
+@@ -23,6 +23,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <arpa/inet.h>
+ #include <unistd.h>
+ 
+ #include "hex.h"

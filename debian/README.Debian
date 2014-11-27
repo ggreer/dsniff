@@ -1,0 +1,8 @@
+dsniff for Debian
+-----------------
+
+Dsniff should depend on libx11-6 because webspy use it. But forcing to the user to install a lot of X stuff in a server for one (and maybe useless, in certain environments) binary. If you want to use webspy, please run this command before:
+
+apt-get install libx11-6
+
+ -- Luciano Bello <luciano@linux.org.ar>, Thu, 02 Nov 2006 17:16:58 -0300

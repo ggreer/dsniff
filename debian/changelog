@@ -1,0 +1,257 @@
+dsniff (2.4b1+debian-18) unstable; urgency=low
+
+  * Swiching to db4.6 (closes:#442643)
+
+ -- Luciano Bello <luciano@debian.org>  Sat, 27 Sep 2008 21:50:54 -0300
+
+dsniff (2.4b1+debian-17) unstable; urgency=low
+
+  * The 'Now works' release
+  * obsolete_time.dpatch: CLK_TCK updated to CLOCKS_PER_SEC (closes:#420944).
+  * pop_with_version.dpatch: dsniff.services distinguish between pop versions.
+  * checksum_libnids.dpatch: Workaround to #420129, because libnids does not
+    trigger the tcp_callback callback for event that come from the client side.
+
+ -- Luciano Bello <luciano@debian.org>  Fri, 10 Aug 2007 19:56:39 -0300
+
+dsniff (2.4b1+debian-16) experimental; urgency=low
+
+  * Urlsnarf sanitizes the sniffed output (Closes:#400624).
+  * The Uploaders field in ~/debian/control added.
+  * The Recommends field in ~/debian/control added.
+  * The long description cosmetic improvement. 
+
+ -- Luciano Bello <luciano@linux.org.ar>  Fri,  8 Dec 2006 18:31:05 -0300
+
+dsniff (2.4b1+debian-15) unstable; urgency=low
+
+  * New mainteiner (Closes:#390822).
+  * Disable the filtering packets with incorrect checksum (Closes:#372536),
+    thanks to Piotr Engelking.
+  * No depends from xlibs and all the other X stuff. The webspy run
+    dependencies are being ignored (Closes:#146246). Please, read README.Debian.
+  * Source without CVS directories (reason of the +debian in the upstream
+    version).
+
+ -- Luciano Bello <luciano@linux.org.ar>  Wed, 18 Oct 2006 23:05:04 -0300
+
+dsniff (2.4b1-14) unstable; urgency=low
+
+  * Fixed arspoof libnet v1.1 bug, thanks to Krzysztof Burghardt.
+    (Closes: #355933)
+  * Fixed macof libnet v1.1 bug, thanks to Florian Weimer.
+    (Closes: #366798)
+  * Switched from libdb4.2 to libdb4.3.
+  * Updated Standards-Version to 3.7.2, no changes needed.
+  * Changed my e-mail address to my debian.org one. 
+
+ -- Faidon Liambotis <paravoid@debian.org>  Fri,  9 Jun 2006 14:13:30 +0300
+
+dsniff (2.4b1-13) unstable; urgency=low
+
+  * Fix FTBFS with OpenSSL 0.9.8. (Closes: #337267) 
+
+ -- Faidon Liambotis <faidon@cube.gr>  Thu,  3 Nov 2005 20:29:48 +0200
+
+dsniff (2.4b1-12) unstable; urgency=low
+
+  * Build-Depend on new libnids1.20 package.
+    (Closes: #318678)
+  * Adapt 01_time.h.dpatch to patch msgsnarf too.
+    (Closes: #315969)
+  * 03_pcap_read_dump.dpatch: expand read pcap dump file to all passive
+    sniffers. Thanks to Joshua Krage for this patch.
+    (Closes: #298604)
+  * Removed obsolete dependency on debmake.
+  * Replaced build-dependency on xlibs-dev with libxmu-dev.
+
+ -- Faidon Liambotis <faidon@cube.gr>  Sat,  6 Aug 2005 12:17:00 +0000
+
+dsniff (2.4b1-11) unstable; urgency=low
+
+  * New co-maintainer: Faidon Liambotis, added to Uploaders.
+  * Changes from Faidon:
+     * Now using debhelper and dpatch.
+     * Split changes to multiple dpatches with appropriate descriptions.
+     * patches/07_libnet_1.1: now depending on libnet1 (v1.1)
+     * Updated Standard-Versions to 3.6.2.1.
+
+ -- Steve Kemp <skx@debian.org>  Thu, 23 Jun 2005 04:32:34 +0000
+
+dsniff (2.4b1-10) unstable; urgency=low
+
+  * Applied patch from Joshua Krage to zero-pad "urlsnarf" output.
+    (Closes: #298605)
+
+ -- Steve Kemp <skx@debian.org>  Mon,  1 May 2005 22:58:27 +0000
+
+dsniff (2.4b1-9) unstable; urgency=low
+
+  * Updated to depend upon the newer version of libnids 1.20
+
+ -- Steve Kemp <skx@debian.org>  Mon, 28 Feb 2005 04:26:27 +0000
+
+dsniff (2.4b1-8) unstable; urgency=high
+
+  * Updated to depend upon the newer version of libnids 1.19
+
+ -- Steve Kemp <skx@debian.org>  Sun, 12 Dec 2004 15:52:34 +0000
+
+dsniff (2.4b1-7) unstable; urgency=high
+
+  * Explicitly Build-Depend upon libpcap0.8-dev
+    (Fixes: #238551) Failed to work correctly on PPC
+    (Fixes: #277089) Links to two different pcap library versions.
+  * Patch dsniff to allow the reading of saved PCAP capture files
+    instead of sniffing the network.   Updated manpage too.
+    (Closes: #153462)
+
+  * Urgency set to high to importance of failure to work.
+  
+ -- Steve Kemp <skx@debian.org>  Mon, 18 Oct 2004 21:27:01 +0000
+
+dsniff (2.4b1-6) unstable; urgency=low
+
+  * Apply configure patch to correct build upon amd64.
+    (Closes: #254002) Thanks to Andreas Jochens for this.
+    Patch submitted upstream too.
+
+ -- Steve Kemp <skx@debian.org>  Tue,  6 Jul 2004 21:38:56 +0000
+
+dsniff (2.4b1-5) unstable; urgency=low
+
+  * Updated build dependecies to fix the FTBFS on ia64 and Alpha.
+    (Closes: #249845)
+
+ -- Steve Kemp <skx@debian.org>  Sun, 23 May 2004 02:09:42 +0000
+
+dsniff (2.4b1-4) unstable; urgency=low
+
+  * Verified lintian and linda clean.
+  * Stop using NMU version numbers.
+    (Closes: #230881)
+  * Use a current version of libdb2 instead of the older version.
+    (Closes: #215241)
+  * Work correctly with multiple devices.
+    (Closes: #242369) Thanks to terpstra@debian.org for the patch.
+
+ -- Steve Kemp <skx@debian.org>  Tue, 18 May 2004 16:07:12 +0000
+
+dsniff (2.4b1-3.6) unstable; urgency=low
+
+  * Depend correctly on libnids 1.18 - not just build depend upon 
+    the -dev package.
+
+ -- Steve Kemp <skx@debian.org>  Wed,  7 Jan 2003 20:15:17 +0000
+
+dsniff (2.4b1-3.5) unstable; urgency=low
+
+  * Updated to depend upon a more recent copy of libnids.
+
+ -- Steve Kemp <skx@debian.org>  Wed,  7 Jan 2003 19:51:21 +0000
+
+dsniff (2.4b1-3.4) unstable; urgency=low
+
+  * Fixed typo in the packages extended description.
+    (Closes: #219170).  Thanks to James Troup
+
+ -- Steve Kemp <skx@debian.org>  Wed,  5 Nov 2003 14:52:04 +0000
+
+dsniff (2.4b1-3.3) unstable; urgency=low
+
+  * Updated standars version to 3.6.1 (no change)
+  * Applied patch to prevent mail sniffing corruption.
+    (Closes: #149330).  Thanks to Guillaume Morin
+
+ -- Steve Kemp <skx@debian.org>  Thu, 16 Oct 2003 10:21:56 +0000
+
+dsniff (2.4b1-3.2) unstable; urgency=low
+
+  * New maintainer.
+  * Updated standards version.
+
+ -- Steve Kemp <skx@debian.org>  Sat, 15 Nov 2003 15:53:26 +0100
+
+dsniff (2.4b1-3.1) unstable; urgency=low
+
+  * NMU
+  * Compiled against libpcap0.7 (Closes: #156214) (Closes: #161746)
+  * Moved out to non-us
+
+ -- Samuele Giovanni Tonon <samu@debian.org>  Thu,  7 Nov 2002 00:19:33 +0100
+
+dsniff (2.4b1-3) unstable; urgency=low
+
+  * Fixed dependency problem (Closes: #118887)
+  * Addition of sshow in control file (Closes: #118888) 
+  * Some small lintian-cleanness-fixes.
+
+ -- Robert van der Meulen <rvdm@debian.org>  Sun, 25 Nov 2001 15:18:32 +0100
+
+dsniff (2.4b1-2) unstable; urgency=low
+
+  * Fixed build depends (Closes: #108964) 
+  * Fixed arm build failure (Closes: #90829)
+  * Fixed sparc build failure (Closes: #84003)
+
+ -- Robert van der Meulen <rvdm@debian.org>  Fri, 17 Aug 2001 12:53:55 +0200
+
+dsniff (2.4b1-1) unstable; urgency=low
+
+  * New upstream version
+  * Fixed manpage (Closes: #90558)
+  * Fixed build depends (Closes: #108866)
+
+ -- Robert van der Meulen <rvdm@debian.org>  Thu, 16 Aug 2001 17:23:59 +0200
+
+dsniff (2.3-3) unstable; urgency=low
+
+  * Fixed more build-depends stuffstuff (Closes: #88139) 
+
+ -- Robert van der Meulen <rvdm@debian.org>  Fri,  2 Mar 2001 21:27:08 +0100
+
+dsniff (2.3-2.1) unstable; urgency=low
+
+  * Bug Party NMU!
+  * Added Build-Depends: libdb2-dev, libnids-dev, libpcap-dev,
+    libssl096-dev, xlibs-dev, libnet-dev, netkit-rpc,
+    debmake (closes: #84195, #84485).
+  * Created a real description from the README (closes: #82201).
+
+ -- Peter Palfrader <weasel@debian.org>  Sat, 24 Feb 2001 21:01:01 +0000
+
+dsniff (2.3-2) unstable; urgency=low
+
+  * Moved to non-US because of libssl096 Depends:. (closes: #81110) 
+
+ -- Robert van der Meulen <rvdm@debian.org>  Tue,  9 Jan 2001 22:46:18 +0100
+
+dsniff (2.3-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Robert van der Meulen <rvdm@debian.org>  Tue, 19 Dec 2000 15:30:37 +0100
+
+dsniff (2.2-4) unstable; urgency=low
+
+  * Dependency was still wrong in -3. Fixed. (closes: #79514)
+
+ -- Robert van der Meulen <rvdm@debian.org>  Thu, 14 Dec 2000 15:04:26 +0100
+
+dsniff (2.2-3) unstable; urgency=low
+
+  * fixed dependencies; dsniff now depends on libnids1 (dynamic library) 
+
+ -- Robert van der Meulen <rvdm@debian.org>  Sun, 10 Dec 2000 19:52:20 +0100
+
+dsniff (2.2-2) unstable; urgency=low
+
+  * 'new maintainer' (actually, real maintainer :) )
+
+ -- Robert van der Meulen <rvdm@debian.org>  Sat,  9 Dec 2000 21:56:01 +0100
+
+dsniff (2.2-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- David M. Zendzian <dmz@debian.org>  Sun, 23 Jul 2000 19:05:38 -0700

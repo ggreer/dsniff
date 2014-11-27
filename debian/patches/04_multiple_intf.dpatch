@@ -1,0 +1,59 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04_multiple_intf.dpatch by Steve Kemp <skx@debian.org>
+##
+## DP: Work with multiple interfaces, Closes #242369.
+
+@DPATCH@
+diff -urNad --exclude=CVS --exclude=.svn ./arp.c /tmp/dpep-work.qKigUC/dsniff-2.4b1/arp.c
+--- ./arp.c	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.qKigUC/dsniff-2.4b1/arp.c	2005-06-23 04:09:05.000000000 +0000
+@@ -39,7 +39,7 @@
+ 
+ #ifdef BSD
+ int
+-arp_cache_lookup(in_addr_t ip, struct ether_addr *ether)
++arp_cache_lookup(in_addr_t ip, struct ether_addr *ether, const char* linf)
+ {
+ 	int mib[6];
+ 	size_t len;
+@@ -91,7 +91,7 @@
+ #endif
+ 
+ int
+-arp_cache_lookup(in_addr_t ip, struct ether_addr *ether)
++arp_cache_lookup(in_addr_t ip, struct ether_addr *ether, const char* lif)
+ {
+ 	int sock;
+ 	struct arpreq ar;
+@@ -99,7 +99,7 @@
+ 	
+ 	memset((char *)&ar, 0, sizeof(ar));
+ #ifdef __linux__
+-	strncpy(ar.arp_dev, "eth0", sizeof(ar.arp_dev));   /* XXX - *sigh* */
++	strncpy(ar.arp_dev, lif, strlen(lif));
+ #endif
+ 	sin = (struct sockaddr_in *)&ar.arp_pa;
+ 	sin->sin_family = AF_INET;
+diff -urNad --exclude=CVS --exclude=.svn ./arp.h /tmp/dpep-work.qKigUC/dsniff-2.4b1/arp.h
+--- ./arp.h	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.qKigUC/dsniff-2.4b1/arp.h	2005-06-23 04:09:07.000000000 +0000
+@@ -11,6 +11,6 @@
+ #ifndef _ARP_H_
+ #define _ARP_H_
+ 
+-int	arp_cache_lookup(in_addr_t ip, struct ether_addr *ether);
++int	arp_cache_lookup(in_addr_t ip, struct ether_addr *ether, const char* linf);
+ 
+ #endif /* _ARP_H_ */
+diff -urNad --exclude=CVS --exclude=.svn ./arpspoof.c /tmp/dpep-work.qKigUC/dsniff-2.4b1/arpspoof.c
+--- ./arpspoof.c	2005-06-23 03:30:37.000000000 +0000
++++ /tmp/dpep-work.qKigUC/dsniff-2.4b1/arpspoof.c	2005-06-23 04:08:41.000000000 +0000
+@@ -113,7 +113,7 @@
+ 	int i = 0;
+ 
+ 	do {
+-		if (arp_cache_lookup(ip, mac) == 0)
++		if (arp_cache_lookup(ip, mac, intf) == 0)
+ 			return (1);
+ #ifdef __linux__
+ 		/* XXX - force the kernel to arp. feh. */
