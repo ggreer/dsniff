@@ -68,7 +68,7 @@ timestamp(void)
 		 t->tm_hour - gmt.tm_hour);
 	tz = hours * 60 + t->tm_min - gmt.tm_min;
 	
-	len = strftime(tstr, sizeof(tstr), "%e/%b/%Y:%X", t);
+	len = strftime(tstr, sizeof(tstr), "%d/%b/%Y:%X", t);
 	if (len < 0 || len > sizeof(tstr) - 5)
 		return (NULL);
 	
