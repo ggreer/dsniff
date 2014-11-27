@@ -41,7 +41,7 @@ static void
 usage(void)
 {
 	fprintf(stderr, "Version: " VERSION "\n"
-		"Usage: urlsnarf [-n] [-i interface] [[-v] pattern [expression]]\n");
+		"Usage: urlsnarf [-n] [-i interface | -p pcapfile] [[-v] pattern [expression]]\n");
 	exit(1);
 }
 
@@ -201,10 +201,13 @@ main(int argc, char *argv[])
 	extern int optind;
 	int c;
 	
-	while ((c = getopt(argc, argv, "i:nvh?V")) != -1) {
+	while ((c = getopt(argc, argv, "i:p:nvh?V")) != -1) {
 		switch (c) {
 		case 'i':
 			nids_params.device = optarg;
+			break;
+		case 'p':
+			nids_params.filename = optarg;
 			break;
 		case 'n':
 			Opt_dns = 0;
@@ -238,8 +241,24 @@ main(int argc, char *argv[])
 	
 	nids_register_tcp(sniff_http_client);
 
-	warnx("listening on %s [%s]", nids_params.device,
-	      nids_params.pcap_filter);
+        if (nids_params.pcap_filter != NULL) {
+                if (nids_params.filename == NULL) {
+                        warnx("listening on %s [%s]", nids_params.device,
+                              nids_params.pcap_filter);
+                }
+                else {
+                        warnx("using %s [%s]", nids_params.filename,
+                              nids_params.pcap_filter);
+                }
+        }
+        else {
+                if (nids_params.filename == NULL) {
+                    warnx("listening on %s", nids_params.device);
+                }
+                else {
+                    warnx("using %s", nids_params.filename);
+                }
+        }
 
 	nids_run();
 	

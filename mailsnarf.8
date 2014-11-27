@@ -9,7 +9,7 @@ sniff mail messages in Berkeley mbox format
 .na
 .nf
 .fi
-\fBmailsnarf\fR [\fB-i \fIinterface\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+\fBmailsnarf\fR [\fB-i \fIinterface\fR | \fB-p \fIpcapfile\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
 .SH DESCRIPTION
 .ad
 .fi
@@ -19,6 +19,8 @@ your favorite mail reader (mail(1), pine(1), etc.).
 .SH OPTIONS
 .IP "\fB-i \fIinterface\fR"
 Specify the interface to listen on.
+.IP "\fB-p \fIpcapfile\fR"
+Process packets from the specified PCAP capture file instead of the network.
 .IP \fB-v\fR
 "Versus" mode. Invert the sense of matching, to select non-matching
 messages.

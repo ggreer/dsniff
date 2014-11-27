@@ -9,7 +9,7 @@ sniff files from NFS traffic
 .na
 .nf
 .fi
-\fBfilesnarf\fR [\fB-i \fIinterface\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+\fBfilesnarf\fR [\fB-i \fIinterface\fR | \fB-p \fIpcapfile\fR] [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
 .SH DESCRIPTION
 .ad
 .fi
@@ -18,6 +18,8 @@ working directory.
 .SH OPTIONS
 .IP "\fB-i \fIinterface\fR"
 Specify the interface to listen on.
+.IP "\fB-p \fIpcapfile\fR"
+Process packets from the specified PCAP capture file instead of the network.
 .IP \fB-v\fR
 "Versus" mode. Invert the sense of matching, to select non-matching
 files.

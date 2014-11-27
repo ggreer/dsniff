@@ -45,7 +45,7 @@ static void
 usage(void)
 {
 	fprintf(stderr, "Version: " VERSION "\n"
-		"Usage: msgsnarf [-i interface] [[-v] pattern [expression]]\n");
+		"Usage: msgsnarf [-i interface | -p pcapfile] [[-v] pattern [expression]]\n");
 	exit(1);
 }
 
@@ -633,10 +633,13 @@ main(int argc, char *argv[])
 	extern int optind;
 	int c;
 	
-	while ((c = getopt(argc, argv, "i:hv?V")) != -1) {
+	while ((c = getopt(argc, argv, "i:p:hv?V")) != -1) {
 		switch (c) {
 		case 'i':
 			nids_params.device = optarg;
+			break;
+		case 'p':
+			nids_params.filename = optarg;
 			break;
 		case 'v':
 			Opt_invert = 1;
@@ -666,11 +669,24 @@ main(int argc, char *argv[])
 	
 	nids_register_tcp(sniff_msgs);
 
-	if (nids_params.pcap_filter != NULL) {
-		warnx("listening on %s [%s]", nids_params.device,
-		      nids_params.pcap_filter);
-	}
-	else warnx("listening on %s", nids_params.device);
+        if (nids_params.pcap_filter != NULL) {
+                if (nids_params.filename == NULL) {
+                        warnx("listening on %s [%s]", nids_params.device,
+                              nids_params.pcap_filter);
+                }
+                else {
+                        warnx("using %s [%s]", nids_params.filename,
+                              nids_params.pcap_filter);
+                }
+        }
+        else {
+                if (nids_params.filename == NULL) {
+                    warnx("listening on %s", nids_params.device);
+                }
+                else {
+                    warnx("using %s", nids_params.filename);
+                }
+        }
 
 	nids_run();
 	

@@ -46,8 +46,9 @@ static void
 usage(void)
 {
 	fprintf(stderr, "Version: " VERSION "\n"
-		"Usage: dsniff [-cdmn] [-i interface] [-s snaplen] [-f services]\n"
-		"              [-t trigger[,...]] [-r|-w savefile] [expression]\n");
+		"Usage: dsniff [-cdmn] [-i interface | -p pcapfile] [-s snaplen]\n"
+		"              [-f services] [-t trigger[,...]] [-r|-w savefile]\n"
+		"              [expression]\n");
 	exit(1);
 }
 
@@ -79,7 +80,7 @@ main(int argc, char *argv[])
 
 	services = savefile = triggers = NULL;
 	
-	while ((c = getopt(argc, argv, "cdf:i:mnr:s:t:w:h?V")) != -1) {
+	while ((c = getopt(argc, argv, "cdf:i:mnp:r:s:t:w:h?V")) != -1) {
 		switch (c) {
 		case 'c':
 			Opt_client = 1;
@@ -98,6 +99,9 @@ main(int argc, char *argv[])
 			break;
 		case 'n':
 			Opt_dns = 0;
+			break;
+		case 'p':
+			nids_params.filename = optarg;
 			break;
 		case 'r':
 			Opt_read = 1;
@@ -168,10 +172,23 @@ main(int argc, char *argv[])
 	else nids_register_tcp(trigger_tcp);
 	
 	if (nids_params.pcap_filter != NULL) {
-		warnx("listening on %s [%s]", nids_params.device,
-		      nids_params.pcap_filter);
+		if (nids_params.filename == NULL) {
+			warnx("listening on %s [%s]", nids_params.device,
+		        nids_params.pcap_filter);
+		}
+		else {
+			warnx("using %s [%s]", nids_params.filename,
+		        nids_params.pcap_filter);
+		}
 	}
-	else warnx("listening on %s", nids_params.device);
+	else {
+		if (nids_params.filename == NULL) {
+			warnx("listening on %s", nids_params.device);
+		}
+		else {
+			warnx("using %s", nids_params.filename);
+		}
+	}
 	
 	nids_run();
 	

@@ -9,7 +9,7 @@ SSH traffic analysis tool
 .na
 .nf
 .fi
-\fBsshow\fR [\fB-d\fR] [\fB-i \fIinterface\fR] [\fIexpression\fR]
+\fBsshow\fR [\fB-d\fR] [\fB-i \fIinterface\fR | \fB-p \fIpcapfile\fR] [\fIexpression\fR]
 .SH DESCRIPTION
 .ad
 .fi
@@ -28,6 +28,8 @@ The following advisory describes the attacks implemented by
 Enable verbose debugging output.
 .IP "\fB-i \fIinterface\fR"
 Specify the interface to listen on.
+.IP "\fB-p \fIpcapfile\fR"
+Process packets from the specified PCAP capture file instead of the network.
 .IP "\fIexpression\fR"
 Specify a tcpdump(8) filter expression to select traffic to sniff.
 .SH "SEE ALSO"

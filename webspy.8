@@ -9,7 +9,7 @@ display sniffed URLs in Netscape in real-time
 .na
 .nf
 .fi
-\fBwebspy\fR [\fB-i \fIinterface\fR] \fIhost\fR
+\fBwebspy\fR [\fB-i \fIinterface\fR | \fB-p \fIpcapfile\fR] \fIhost\fR
 .SH DESCRIPTION
 .ad
 .fi
@@ -20,6 +20,8 @@ running on your local X display ahead of time.
 .SH OPTIONS
 .IP "\fB-i \fIinterface\fR"
 Specify the interface to listen on.
+.IP "\fB-p \fIpcapfile\fR"
+Process packets from the specified PCAP capture file instead of the network.
 .IP \fIhost\fR
 Specify the web client to spy on.
 .SH "SEE ALSO"

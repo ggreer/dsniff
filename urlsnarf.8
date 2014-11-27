@@ -9,7 +9,7 @@ sniff HTTP requests in Common Log Format
 .na
 .nf
 .fi
-\fBurlsnarf\fR [\fB-n\fR] [\fB-i \fIinterface\fR]  [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
+\fBurlsnarf\fR [\fB-n\fR] [\fB-i \fIinterface\fR | \fB-p \fIpcapfile\fR]  [[\fB-v\fR] \fIpattern [\fIexpression\fR]]
 .SH DESCRIPTION
 .ad
 .fi
@@ -21,6 +21,9 @@ offline post-processing with your favorite web log analysis tool
 .IP \fB-n\fR
 Do not resolve IP addresses to hostnames.
 .IP "\fB-i \fIinterface\fR"
+Specify the interface to listen on.
+.IP "\fB-p \fIpcapfile\fR"
+Process packets from the specified PCAP capture file instead of the network.
 .IP \fB-v\fR
 "Versus" mode. Invert the sense of matching, to select non-matching
 URLs.
