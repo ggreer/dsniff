@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <arpa/inet.h>
 
 #include "buf.h"
 #include "decode.h"
