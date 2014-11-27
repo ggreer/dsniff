@@ -14,6 +14,8 @@
 
 #include <sys/types.h>
 #include <openssl/ssl.h>
+#include <openssl/blowfish.h>
+#include <openssl/des.h>
 
 #include <err.h>
 #include <stdio.h>
