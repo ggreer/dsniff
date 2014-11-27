@@ -200,6 +200,7 @@ main(int argc, char *argv[])
 	extern char *optarg;
 	extern int optind;
 	int c;
+	struct nids_chksum_ctl chksum_ctl;
 	
 	while ((c = getopt(argc, argv, "i:p:nvh?V")) != -1) {
 		switch (c) {
@@ -259,6 +260,12 @@ main(int argc, char *argv[])
                     warnx("using %s", nids_params.filename);
                 }
         }
+
+        chksum_ctl.netaddr = 0;
+        chksum_ctl.mask = 0;
+        chksum_ctl.action = NIDS_DONT_CHKSUM;
+
+        nids_register_chksum_ctl(&chksum_ctl, 1);
 
 	nids_run();
 	
