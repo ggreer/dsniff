@@ -1,0 +1,15 @@
+*.dSYM
+*.o
+*.plist
+.deps
+.dirstamp
+.DS_Store
+aclocal.m4
+autom4te.cache
+compile
+config.log
+config.status
+config.sub
+install-sh
+Makefile
+config.h*
