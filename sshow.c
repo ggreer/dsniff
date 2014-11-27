@@ -217,6 +217,7 @@ client_to_server(struct tcp_stream *ts, struct session *session,
 {
 	clock_t delay;
 	int payload;
+    long CLK_TCK= sysconf(_SC_CLK_TCK);
 
 	delay = add_history(session, 0, cipher_size, plain_range);
 
@@ -265,6 +266,7 @@ server_to_client(struct tcp_stream *ts, struct session *session,
 	clock_t delay;
 	int skip;
 	range string_range;
+    long CLK_TCK= sysconf(_SC_CLK_TCK);
 	
 	delay = add_history(session, 1, cipher_size, plain_range);
 	
