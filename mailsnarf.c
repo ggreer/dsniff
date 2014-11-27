@@ -178,7 +178,7 @@ process_smtp_client(struct smtp_info *smtp, char *data, int len)
 	if (smtp->state != SMTP_DATA) {
 		while ((i = buf_index(&buf, "\r\n", 2)) >= 0) {
 			line = buf_tok(&buf, NULL, i + 2);
-			line->base[line->end] = '\0';
+			line->base[line->end-1] = '\0';
 			p = buf_ptr(line);
 			
 			if (strncasecmp(p, "RSET", 4) == 0) {
