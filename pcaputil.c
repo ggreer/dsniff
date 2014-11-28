@@ -16,10 +16,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <err.h>
-#include <pcap.h>
 #ifdef BSD
-#include <pcap-int.h>
+#include <net/bpf.h>
+#include <pcap-bpf.h>
 #endif
+#include <pcap.h>
 
 #include "pcaputil.h"
 
