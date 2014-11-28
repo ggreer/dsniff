@@ -1,6 +1,8 @@
 /* $Id: strlcat.c,v 1.1 2000/04/08 20:50:28 dugsong Exp $ */
 /*	$OpenBSD: strlcat.c,v 1.1 1998/07/01 01:29:45 millert Exp $	*/
 
+#ifndef HAVE_STRLCAT
+
 /*
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
  * All rights reserved.
@@ -70,3 +72,5 @@ size_t strlcat(dst, src, siz)
 
 	return(dlen + (s - src));	/* count does not include NUL */
 }
+
+#endif

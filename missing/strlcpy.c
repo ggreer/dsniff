@@ -1,6 +1,8 @@
 /* $Id: strlcpy.c,v 1.1 2000/04/08 20:50:28 dugsong Exp $ */
 /*	$OpenBSD: strlcpy.c,v 1.2 1998/11/06 04:33:16 wvdputte Exp $	*/
 
+#ifndef HAVE_STRLCPY
+
 /*
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
  * All rights reserved.
@@ -62,3 +64,5 @@ size_t strlcpy(dst, src, siz)
 
 	return(s - src);	/* count does not include NUL */
 }
+
+#endif
