@@ -25,7 +25,9 @@
 #include "arp.h"
 #include "version.h"
 
+#ifndef HAVE_ETHER_NTOA
 extern char *ether_ntoa(struct ether_addr *);
+#endif
 
 static libnet_t *l;
 static struct ether_addr spoof_mac, target_mac;

@@ -50,7 +50,7 @@ AC_PROG_GCC_TRADITIONAL
 AC_FUNC_MEMCMP
 AC_TYPE_SIGNAL
 AC_FUNC_STRFTIME
-AC_CHECK_FUNCS(gethostname socket strdup strstr)
+AC_CHECK_FUNCS(gethostname socket strdup strstr ether_ntoa)
 AC_CHECK_LIB(rpcsvc, xdr_fhstatus)
 dnl XXX - Solaris sux.
 AC_CHECK_LIB(socket, socket)
