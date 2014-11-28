@@ -37,7 +37,7 @@ SSLLIB	= @SSLLIB@
 X11INC	= @X_CFLAGS@
 X11LIB	= @X_LIBS@ @X_PRE_LIBS@ -lXmu -lX11 @X_EXTRA_LIBS@
 
-INCS	= -I. $(X11INC) -I$(srcdir)/missing 
+INCS	= -I. $(X11INC) -I$(srcdir)/missing $(PCAPINC) $(LNETINC) $(NIDSINC) $(SSLINC)
 LIBS	= @LIBS@ -L$(srcdir) -lmissing
 
 INSTALL	= @INSTALL@
