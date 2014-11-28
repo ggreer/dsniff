@@ -15,6 +15,9 @@
 #include <sys/socket.h>
 #include <sys/wait.h>
 #include <arpa/nameser.h>
+#ifdef __APPLE__
+#include <arpa/nameser_compat.h>
+#endif
 #include <openssl/ssl.h>
 #include <libnet.h>
 
@@ -42,7 +45,7 @@ int	 mitm_fd;
 int	 client_fd, server_fd;
 SSH_CTX	*ssh_client_ctx, *ssh_server_ctx;
 SSH	*ssh_client, *ssh_server;
-struct	 sockaddr_in csin, ssin;
+struct	 sockaddr_in c_sin, ssin;
 int	 sig_pipe[2];
 
 static void
@@ -149,7 +152,7 @@ mitm_child(void)
 	
 	if (Opt_debug)
 		warnx("new connection from %s.%d",
-		      inet_ntoa(csin.sin_addr), ntohs(csin.sin_port));
+		      inet_ntoa(c_sin.sin_addr), ntohs(c_sin.sin_port));
 	
 	if (fcntl(client_fd, F_SETFL, 0) == -1)
 		err(1, "fcntl");
@@ -238,10 +241,10 @@ mitm_child(void)
 				}
 				else {
 					pass_done = 1;
-					record(csin.sin_addr.s_addr,
+					record(c_sin.sin_addr.s_addr,
 					       ssin.sin_addr.s_addr,
 					       IPPROTO_TCP,
-					       ntohs(csin.sin_port),
+					       ntohs(c_sin.sin_port),
 					       ntohs(ssin.sin_port), "ssh",
 					       userpass, strlen(userpass));
 				}
@@ -327,7 +330,7 @@ mitm_run(void)
 			if (errno != EINTR)
 				err(1, "select");
 		}
-		i = sizeof(csin);
+		i = sizeof(c_sin);
 		
 		if (FD_ISSET(sig_pipe[0], &fds)) {
 			while (read(sig_pipe[0], buf, 1) == 1)
@@ -337,7 +340,7 @@ mitm_run(void)
 		}
 		if (FD_ISSET(mitm_fd, &fds)) {
 			client_fd = accept(mitm_fd,
-					   (struct sockaddr *)&csin, &i);
+					   (struct sockaddr *)&c_sin, &i);
 
 			if (client_fd >= 0) {
 				if (fork() == 0) {

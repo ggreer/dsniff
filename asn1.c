@@ -10,6 +10,9 @@
 
 #include <sys/types.h>
 #include <arpa/nameser.h>
+#ifdef __APPLE__
+#include <arpa/nameser_compat.h>
+#endif
 
 #include <unistd.h>
 

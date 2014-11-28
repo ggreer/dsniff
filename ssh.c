@@ -13,6 +13,9 @@
 #include <sys/param.h>
 #include <sys/types.h>
 #include <arpa/nameser.h>
+#ifdef __APPLE__
+#include <arpa/nameser_compat.h>
+#endif
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/rand.h>
