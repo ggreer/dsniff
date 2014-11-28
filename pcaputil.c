@@ -89,7 +89,8 @@ pcap_init(char *intf, char *filter, int snaplen)
 		return (NULL);
 	}
 #ifdef BSD
-	if (bpf_immediate(pd->fd, 1) < 0) {
+	int fd = pcap_get_selectable_fd(pd);
+	if (bpf_immediate(fd, 1) < 0) {
 		perror("ioctl");
 		return (NULL);
 	}
