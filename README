@@ -1,6 +1,37 @@
 
-dsniff-2.3
-----------
+dsniff-2.4b1
+------------
+
+This is a fork of Dug Song's dsniff tools, updated to compile and run on OS X.
+
+Installation on OS X:
+
+1. Install dependencies:
+
+brew install berkeley-db libnet libnids libpcap openssl
+
+2. Configure with correct paths:
+
+./configure \
+  --with-libpcap=/usr/local/opt/libpcap \
+  --with-openssl=/usr/local/opt/openssl \
+  --with-libnet=/usr/local/opt/libnet \
+  --with-libnids=/usr/local/opt/libnids \
+  --without-x
+
+3. Compile:
+
+make
+
+4. Install:
+
+make install
+
+------------
+
+Original README follows
+
+------------
 
 i wrote these tools with honest intentions - to audit my own network,
 and to demonstrate the insecurity of cleartext / weakly-encrypted
