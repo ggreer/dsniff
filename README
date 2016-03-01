@@ -8,12 +8,11 @@ Installation on OS X:
 
 1. Install dependencies:
 
-brew install berkeley-db libnet libnids libpcap openssl
+brew install berkeley-db libnet libnids openssl
 
 2. Configure with correct paths:
 
 ./configure \
-  --with-libpcap=/usr/local/opt/libpcap \
   --with-openssl=/usr/local/opt/openssl \
   --with-libnet=/usr/local/opt/libnet \
   --with-libnids=/usr/local/opt/libnids \
