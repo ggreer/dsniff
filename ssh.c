@@ -92,7 +92,7 @@ static u_int crc32_tab[] = {
 static u_char	pkt[4 + 8 + SSH_MAX_PKTLEN];
 
 static void
-put_bn(BIGNUM *bn, u_char **pp)
+put_bn(const BIGNUM *bn, u_char **pp)
 {
 	short i;
 	
@@ -233,7 +233,12 @@ SSH_set_fd(SSH *ssh, int fd)
 int
 SSH_accept(SSH *ssh)
 {
+	const BIGNUM *host_bn_n;
+	const BIGNUM *host_bn_e;
+	const BIGNUM *serv_bn_n;
+	const BIGNUM *serv_bn_e;
 	BIGNUM *enckey;
+
 	u_char *p, cipher, cookie[8], msg[1024];
 	u_int32_t num;
 	int i;
@@ -244,14 +249,19 @@ SSH_accept(SSH *ssh)
 	/* Send public key. */
 	p = msg;
 	*p++ = SSH_SMSG_PUBLIC_KEY;			/* type */
-	memcpy(p, cookie, 8); p += 8;			/* cookie */
+	memcpy(p, cookie, 8); p += 8;		/* cookie */
 	num = 768; PUTLONG(num, p);			/* servkey bits */
-	put_bn(ssh->ctx->servkey->e, &p);		/* servkey exponent */
-	put_bn(ssh->ctx->servkey->n, &p);		/* servkey modulus */
+
+	RSA_get0_key(ssh->ctx->servkey, &serv_bn_n, &serv_bn_e, NULL);
+	put_bn(serv_bn_e, &p);		/* servkey exponent */
+	put_bn(serv_bn_n, &p);		/* servkey modulus */
 	num = 1024; PUTLONG(num, p);			/* hostkey bits */
-	put_bn(ssh->ctx->hostkey->e, &p);		/* hostkey exponent */
-	put_bn(ssh->ctx->hostkey->n, &p);		/* hostkey modulus */
+	
+	RSA_get0_key(ssh->ctx->hostkey, &host_bn_n, &host_bn_e, NULL);
+	put_bn(host_bn_e, &p); /* hostkey exponent */
+	put_bn(host_bn_n, &p); /* hostkey modulus */
 	num = 0; PUTLONG(num, p);			/* protocol flags */
+	
 	num = ssh->ctx->encmask; PUTLONG(num, p);	/* ciphers */
 	num = ssh->ctx->authmask; PUTLONG(num, p);	/* authmask */
 	
@@ -301,7 +311,7 @@ SSH_accept(SSH *ssh)
 	SKIP(p, i, 4);
 
 	/* Decrypt session key. */
-	if (BN_cmp(ssh->ctx->servkey->n, ssh->ctx->hostkey->n) > 0) {
+	if (BN_cmp(serv_bn_n, host_bn_n) > 0) {
 		rsa_private_decrypt(enckey, enckey, ssh->ctx->servkey);
 		rsa_private_decrypt(enckey, enckey, ssh->ctx->hostkey);
 	}
@@ -321,8 +331,7 @@ SSH_accept(SSH *ssh)
 	BN_clear_free(enckey);
 	
 	/* Derive real session key using session id. */
-	if ((p = ssh_session_id(cookie, ssh->ctx->hostkey->n,
-				ssh->ctx->servkey->n)) == NULL) {
+	if ((p = ssh_session_id(cookie, host_bn_n, serv_bn_n)) == NULL) { 
 		warn("ssh_session_id");
 		return (-1);
 	}
