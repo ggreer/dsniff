@@ -38,13 +38,16 @@ struct des3_state {
 void
 rsa_public_encrypt(BIGNUM *out, BIGNUM *in, RSA *key)
 {
+	BIGNUM *bn_e, *bn_n;
 	u_char *inbuf, *outbuf;
 	int len, ilen, olen;
 
-	//if (BN_num_bits(key->e) < 2 || !BN_is_odd(key->e))
-	//	errx(1, "rsa_public_encrypt() exponent too small or not odd");
+	RSA_get0_key(key, &bn_n, &bn_e, NULL);
 
-	//olen = BN_num_bytes(key->n);
+	if (BN_num_bits(bn_e) < 2 || !BN_is_odd(bn_e))
+		errx(1, "rsa_public_encrypt() exponent too small or not odd");
+
+	olen = BN_num_bytes(bn_n);
 	outbuf = malloc(olen);
 
 	ilen = BN_num_bytes(in);
@@ -70,10 +73,13 @@ rsa_public_encrypt(BIGNUM *out, BIGNUM *in, RSA *key)
 void
 rsa_private_decrypt(BIGNUM *out, BIGNUM *in, RSA *key)
 {
+	BIGNUM *bn_n, *bn_e;
 	u_char *inbuf, *outbuf;
 	int len, ilen, olen;
+	
+	RSA_get0_key(key, &bn_n, &bn_e, NULL);
 
-	//olen = BN_num_bytes(key->n);
+	olen = BN_num_bytes(bn_n);
 	outbuf = malloc(olen);
 
 	ilen = BN_num_bytes(in);
