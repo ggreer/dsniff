@@ -20,7 +20,6 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 #include <openssl/md5.h>
-#include <openssl/bn.h>
 
 #include <err.h>
 #include <errno.h>
