@@ -21,6 +21,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
+
 #include "sshcrypto.h"
 
 struct blowfish_state {
@@ -29,8 +31,8 @@ struct blowfish_state {
 };
 
 struct des3_state {
-	des_key_schedule	k1, k2, k3;
-	des_cblock		iv1, iv2, iv3;
+	DES_key_schedule	k1, k2, k3;
+	DES_cblock		iv1, iv2, iv3;
 };
 
 void
@@ -39,10 +41,10 @@ rsa_public_encrypt(BIGNUM *out, BIGNUM *in, RSA *key)
 	u_char *inbuf, *outbuf;
 	int len, ilen, olen;
 
-	if (BN_num_bits(key->e) < 2 || !BN_is_odd(key->e))
-		errx(1, "rsa_public_encrypt() exponent too small or not odd");
+	//if (BN_num_bits(key->e) < 2 || !BN_is_odd(key->e))
+	//	errx(1, "rsa_public_encrypt() exponent too small or not odd");
 
-	olen = BN_num_bytes(key->n);
+	//olen = BN_num_bytes(key->n);
 	outbuf = malloc(olen);
 
 	ilen = BN_num_bytes(in);
@@ -71,7 +73,7 @@ rsa_private_decrypt(BIGNUM *out, BIGNUM *in, RSA *key)
 	u_char *inbuf, *outbuf;
 	int len, ilen, olen;
 
-	olen = BN_num_bytes(key->n);
+	//olen = BN_num_bytes(key->n);
 	outbuf = malloc(olen);
 
 	ilen = BN_num_bytes(in);
@@ -155,13 +157,13 @@ des3_init(u_char *sesskey, int len)
 	if ((state = malloc(sizeof(*state))) == NULL)
 		err(1, "malloc");
 
-	des_set_key((void *)sesskey, state->k1);
-	des_set_key((void *)(sesskey + 8), state->k2);
+	DES_set_key((void *)sesskey, &state->k1);
+	DES_set_key((void *)(sesskey + 8), &state->k2);
 
 	if (len <= 16)
-		des_set_key((void *)sesskey, state->k3);
+		DES_set_key((void *)sesskey, &state->k3);
 	else
-		des_set_key((void *)(sesskey + 16), state->k3);
+		DES_set_key((void *)(sesskey + 16), &state->k3);
 	
 	memset(state->iv1, 0, 8);
 	memset(state->iv2, 0, 8);
@@ -177,9 +179,9 @@ des3_encrypt(u_char *src, u_char *dst, int len, void *state)
 	estate = (struct des3_state *)state;
 	memcpy(estate->iv1, estate->iv2, 8);
 	
-	des_ncbc_encrypt(src, dst, len, estate->k1, &estate->iv1, DES_ENCRYPT);
-	des_ncbc_encrypt(dst, dst, len, estate->k2, &estate->iv2, DES_DECRYPT);
-	des_ncbc_encrypt(dst, dst, len, estate->k3, &estate->iv3, DES_ENCRYPT);
+	DES_ncbc_encrypt(src, dst, len, &estate->k1, &estate->iv1, DES_ENCRYPT);
+	DES_ncbc_encrypt(dst, dst, len, &estate->k2, &estate->iv2, DES_DECRYPT);
+	DES_ncbc_encrypt(dst, dst, len, &estate->k3, &estate->iv3, DES_ENCRYPT);
 }
 
 void
@@ -190,7 +192,7 @@ des3_decrypt(u_char *src, u_char *dst, int len, void *state)
 	dstate = (struct des3_state *)state;
 	memcpy(dstate->iv1, dstate->iv2, 8);
 	
-	des_ncbc_encrypt(src, dst, len, dstate->k3, &dstate->iv3, DES_DECRYPT);
-	des_ncbc_encrypt(dst, dst, len, dstate->k2, &dstate->iv2, DES_ENCRYPT);
-	des_ncbc_encrypt(dst, dst, len, dstate->k1, &dstate->iv1, DES_DECRYPT);
+	DES_ncbc_encrypt(src, dst, len, &dstate->k3, &dstate->iv3, DES_DECRYPT);
+	DES_ncbc_encrypt(dst, dst, len, &dstate->k2, &dstate->iv2, DES_ENCRYPT);
+	DES_ncbc_encrypt(dst, dst, len, &dstate->k1, &dstate->iv1, DES_DECRYPT);
 }
