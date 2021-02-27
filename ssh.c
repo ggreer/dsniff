@@ -122,7 +122,7 @@ get_bn(BIGNUM *bn, u_char **pp, int *lenp)
 }
 
 static u_char *
-ssh_session_id(u_char *cookie, BIGNUM *hostkey_n, BIGNUM *servkey_n)
+ssh_session_id(u_char *cookie, const BIGNUM *hostkey_n, const BIGNUM *servkey_n)
 {
 	static u_char sessid[16];
 	u_int i, j;
@@ -420,10 +420,18 @@ SSH_connect(SSH *ssh)
 	/* Get hostkey. */
 	ssh->ctx->hostkey = RSA_new();
 
+	host_bn_ctx = BN_CTX_new();
+	if (host_bn_ctx == NULL)
+	{
+		return (-1);
+	}
+
 	BN_CTX_start (host_bn_ctx);
 	host_bn_e = BN_CTX_get(host_bn_ctx);
 	host_bn_n = BN_CTX_get(host_bn_ctx);
 	RSA_set0_key(ssh->ctx->hostkey, host_bn_n, host_bn_n, NULL);
+
+	BN_CTX_end (host_bn_ctx);
 
 	SKIP(p, i, 4);
 	get_bn(host_bn_e, &p, &i);
