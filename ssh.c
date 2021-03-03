@@ -92,7 +92,7 @@ static u_int crc32_tab[] = {
 static u_char	pkt[4 + 8 + SSH_MAX_PKTLEN];
 
 static void
-put_bn(BIGNUM *bn, u_char **pp)
+put_bn(const BIGNUM *bn, u_char **pp)
 {
 	short i;
 	
@@ -122,7 +122,7 @@ get_bn(BIGNUM *bn, u_char **pp, int *lenp)
 }
 
 static u_char *
-ssh_session_id(u_char *cookie, BIGNUM *hostkey_n, BIGNUM *servkey_n)
+ssh_session_id(u_char *cookie, const BIGNUM *hostkey_n, const BIGNUM *servkey_n)
 {
 	static u_char sessid[16];
 	u_int i, j;
@@ -233,7 +233,12 @@ SSH_set_fd(SSH *ssh, int fd)
 int
 SSH_accept(SSH *ssh)
 {
+	const BIGNUM *host_bn_n;
+	const BIGNUM *host_bn_e;
+	const BIGNUM *serv_bn_n;
+	const BIGNUM *serv_bn_e;
 	BIGNUM *enckey;
+
 	u_char *p, cipher, cookie[8], msg[1024];
 	u_int32_t num;
 	int i;
@@ -244,14 +249,19 @@ SSH_accept(SSH *ssh)
 	/* Send public key. */
 	p = msg;
 	*p++ = SSH_SMSG_PUBLIC_KEY;			/* type */
-	memcpy(p, cookie, 8); p += 8;			/* cookie */
+	memcpy(p, cookie, 8); p += 8;		/* cookie */
 	num = 768; PUTLONG(num, p);			/* servkey bits */
-	put_bn(ssh->ctx->servkey->e, &p);		/* servkey exponent */
-	put_bn(ssh->ctx->servkey->n, &p);		/* servkey modulus */
+
+	RSA_get0_key(ssh->ctx->servkey, &serv_bn_n, &serv_bn_e, NULL);
+	put_bn(serv_bn_e, &p);		/* servkey exponent */
+	put_bn(serv_bn_n, &p);		/* servkey modulus */
 	num = 1024; PUTLONG(num, p);			/* hostkey bits */
-	put_bn(ssh->ctx->hostkey->e, &p);		/* hostkey exponent */
-	put_bn(ssh->ctx->hostkey->n, &p);		/* hostkey modulus */
+	
+	RSA_get0_key(ssh->ctx->hostkey, &host_bn_n, &host_bn_e, NULL);
+	put_bn(host_bn_e, &p); /* hostkey exponent */
+	put_bn(host_bn_n, &p); /* hostkey modulus */
 	num = 0; PUTLONG(num, p);			/* protocol flags */
+	
 	num = ssh->ctx->encmask; PUTLONG(num, p);	/* ciphers */
 	num = ssh->ctx->authmask; PUTLONG(num, p);	/* authmask */
 	
@@ -301,7 +311,7 @@ SSH_accept(SSH *ssh)
 	SKIP(p, i, 4);
 
 	/* Decrypt session key. */
-	if (BN_cmp(ssh->ctx->servkey->n, ssh->ctx->hostkey->n) > 0) {
+	if (BN_cmp(serv_bn_n, host_bn_n) > 0) {
 		rsa_private_decrypt(enckey, enckey, ssh->ctx->servkey);
 		rsa_private_decrypt(enckey, enckey, ssh->ctx->hostkey);
 	}
@@ -321,8 +331,7 @@ SSH_accept(SSH *ssh)
 	BN_clear_free(enckey);
 	
 	/* Derive real session key using session id. */
-	if ((p = ssh_session_id(cookie, ssh->ctx->hostkey->n,
-				ssh->ctx->servkey->n)) == NULL) {
+	if ((p = ssh_session_id(cookie, host_bn_n, serv_bn_n)) == NULL) { 
 		warn("ssh_session_id");
 		return (-1);
 	}
@@ -356,6 +365,14 @@ SSH_accept(SSH *ssh)
 int
 SSH_connect(SSH *ssh)
 {
+	BN_CTX *serv_bn_ctx;
+	BIGNUM *serv_bn_e;
+	BIGNUM *serv_bn_n;
+
+	BN_CTX *host_bn_ctx;
+	BIGNUM *host_bn_e;
+	BIGNUM *host_bn_n;
+
 	BIGNUM *bn;
 	u_char *p, cipher, cookie[8], msg[1024];
 	u_int32_t num;
@@ -382,21 +399,45 @@ SSH_connect(SSH *ssh)
 
 	/* Get servkey. */
 	ssh->ctx->servkey = RSA_new();
-	ssh->ctx->servkey->n = BN_new();
-	ssh->ctx->servkey->e = BN_new();
+
+	serv_bn_ctx = BN_CTX_new();
+	if (serv_bn_ctx == NULL)
+	{
+		return (-1);
+	}
+
+	BN_CTX_start (serv_bn_ctx);
+	serv_bn_e = BN_CTX_get(serv_bn_ctx);
+	serv_bn_n = BN_CTX_get(serv_bn_ctx);
+	RSA_set0_key(ssh->ctx->servkey, serv_bn_n, serv_bn_n, NULL);
 
 	SKIP(p, i, 4);
-	get_bn(ssh->ctx->servkey->e, &p, &i);
-	get_bn(ssh->ctx->servkey->n, &p, &i);
+	get_bn(serv_bn_e, &p, &i);
+	get_bn(serv_bn_n, &p, &i);
+
+	BN_CTX_end (serv_bn_ctx);
 
 	/* Get hostkey. */
 	ssh->ctx->hostkey = RSA_new();
-	ssh->ctx->hostkey->n = BN_new();
-	ssh->ctx->hostkey->e = BN_new();
+
+	host_bn_ctx = BN_CTX_new();
+	if (host_bn_ctx == NULL)
+	{
+		return (-1);
+	}
+
+	BN_CTX_start (host_bn_ctx);
+	host_bn_e = BN_CTX_get(host_bn_ctx);
+	host_bn_n = BN_CTX_get(host_bn_ctx);
+	RSA_set0_key(ssh->ctx->hostkey, host_bn_n, host_bn_n, NULL);
+
+	BN_CTX_end (host_bn_ctx);
 
 	SKIP(p, i, 4);
-	get_bn(ssh->ctx->hostkey->e, &p, &i);
-	get_bn(ssh->ctx->hostkey->n, &p, &i);
+	get_bn(host_bn_e, &p, &i);
+	get_bn(host_bn_n, &p, &i);
+
+	BN_CTX_end (host_bn_ctx);
 
 	/* Get cipher, auth masks. */
 	SKIP(p, i, 4);
@@ -408,8 +449,7 @@ SSH_connect(SSH *ssh)
 	RAND_bytes(ssh->sesskey, sizeof(ssh->sesskey));
 
 	/* Obfuscate with session id. */
-	if ((p = ssh_session_id(cookie, ssh->ctx->hostkey->n,
-				ssh->ctx->servkey->n)) == NULL) {
+	if ((p = ssh_session_id(cookie, host_bn_n, serv_bn_n)) == NULL) {
 		warn("ssh_session_id");
 		return (-1);
 	}
@@ -425,7 +465,7 @@ SSH_connect(SSH *ssh)
 		else BN_add_word(bn, ssh->sesskey[i]);
 	}
 	/* Encrypt session key. */
-	if (BN_cmp(ssh->ctx->servkey->n, ssh->ctx->hostkey->n) < 0) {
+	if (BN_cmp(serv_bn_n, host_bn_n) < 0) {
 		rsa_public_encrypt(bn, bn, ssh->ctx->servkey);
 		rsa_public_encrypt(bn, bn, ssh->ctx->hostkey);
 	}
