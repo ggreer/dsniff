@@ -204,7 +204,7 @@ main(int argc, char *argv[])
 	
 	filter = copy_argv(argv);
 	
-	if ((pd = pcap_init(intf, filter, 128)) == NULL)
+	if ((pd = pcap_init_ds(intf, filter, 128)) == NULL)
 		errx(1, "couldn't initialize sniffing");
 
 	if ((pcap_off = pcap_dloff(pd)) < 0)
