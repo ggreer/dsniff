@@ -312,7 +312,7 @@ main(int argc, char *argv[])
 	else snprintf(buf, sizeof(buf), "udp dst port 53 and not src %s",
 		      libnet_addr2name4(lnet_ip, LIBNET_DONT_RESOLVE));
 	
-	if ((pcap_pd = pcap_init(dev, buf, 128)) == NULL)
+	if ((pcap_pd = pcap_init_ds(dev, buf, 128)) == NULL)
 		errx(1, "couldn't initialize sniffing");
 
 	if ((pcap_off = pcap_dloff(pcap_pd)) < 0)
